@@ -15,10 +15,11 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-portal'
+			'itop-portal/1.0.0'
 		),
 		'mandatory' => false,
 		'visible' => true,
+		//'auto_select' => 'SetupInfo::ModuleIsSelected("itop-portal")',
 
 		// Components
 		//
