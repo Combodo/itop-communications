@@ -9,7 +9,7 @@ SetupWebPage::AddModule(
 	array(
 		// Identification
 		//
-		'label' => 'Communications in the portal',
+		'label' => 'Communications to the Customers',
 		'category' => 'portal',
 
 		// Setup
@@ -23,7 +23,8 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			'model.itop-communications.php'
+			'model.itop-communications.php',
+			'main.itop-communications.php'
 		),
 		'webservice' => array(
 			

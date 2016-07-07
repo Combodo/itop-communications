@@ -1,15 +1,421 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3">
   <constants>
+    <constant id="PORTAL_COMMUNICATION_QUERY" xsi:type="string" _delta="define"><![CDATA[SELECT Communication WHERE status != 'closed' AND start_date <= NOW()]]></constant>
   </constants>
   <classes>
+    <class id="Communication" _delta="define">
+      <properties>
+        <category>bizmodel,searchable</category>
+        <abstract>false</abstract>
+        <db_table>communication</db_table>
+        <icon>
+          <fileref ref="communication_90109793268989a4709622ad7341c32d"/>
+        </icon>
+        <reconciliation>
+          <attributes>
+            <attribute id="org_id"/>
+            <attribute id="org_name"/>
+            <attribute id="ref"/>
+          </attributes>
+        </reconciliation>
+        <naming>
+          <attributes>
+            <attribute id="ref"/>
+          </attributes>
+        </naming>
+      </properties>
+      <fields>
+        <field id="ref" xsi:type="AttributeString">
+          <sql>ref</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+          <validation_pattern/>
+        </field>
+        <field id="start_date" xsi:type="AttributeDateTime">
+          <sql>start_date</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="end_date" xsi:type="AttributeDateTime">
+          <sql>end_date</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="status" xsi:type="AttributeEnum">
+          <sql>status</sql>
+          <values>
+            <value id="ongoing">ongoing</value>
+            <value id="closed">closed</value>
+          </values>
+          <default_value>ongoing</default_value>
+          <is_null_allowed>false</is_null_allowed>
+          <display_style>list</display_style>
+        </field>
+        <field id="creation_date" xsi:type="AttributeDateTime">
+          <sql>creation_date</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="org_id" xsi:type="AttributeExternalKey">
+          <sql>org_id</sql>
+          <filter/>
+          <dependencies/>
+          <is_null_allowed>false</is_null_allowed>
+          <target_class>Organization</target_class>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+        </field>
+        <field id="org_name" xsi:type="AttributeExternalField">
+          <extkey_attcode>org_id</extkey_attcode>
+          <target_attcode>name</target_attcode>
+        </field>
+        <field id="publisher_id" xsi:type="AttributeExternalKey">
+          <sql>publisher_id</sql>
+          <filter/>
+          <dependencies/>
+          <is_null_allowed>true</is_null_allowed>
+          <target_class>Contact</target_class>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+        </field>
+        <field id="publisher_name" xsi:type="AttributeExternalField">
+          <extkey_attcode>publisher_id</extkey_attcode>
+          <target_attcode>name</target_attcode>
+        </field>
+        <field id="message" xsi:type="AttributeHTML">
+          <sql>message</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+          <validation_pattern/>
+          <width/>
+          <height/>
+        </field>
+        <field id="organizations_list" xsi:type="AttributeLinkedSetIndirect">
+          <linked_class>lnkCommunicationToOrganization</linked_class>
+          <ext_key_to_me>communication_id</ext_key_to_me>
+          <count_min>0</count_min>
+          <count_max>0</count_max>
+          <ext_key_to_remote>org_id</ext_key_to_remote>
+          <duplicates/>
+        </field>
+      </fields>
+      <lifecycle>
+        <attribute>status</attribute>
+        <highlight_scale>
+        </highlight_scale>
+        <states>
+          <state id="ongoing">
+            <flags>
+              <attribute id="creation_date">
+                <read_only/>
+              </attribute>
+              <attribute id="end_date"/>
+              <attribute id="message">
+                <mandatory/>
+              </attribute>
+              <attribute id="org_id">
+                <mandatory/>
+              </attribute>
+              <attribute id="publisher_id">
+                <read_only/>
+              </attribute>
+              <attribute id="ref">
+                <hidden/>
+              </attribute>
+              <attribute id="start_date">
+                <mandatory/>
+              </attribute>
+            </flags>
+            <transitions>
+              <transition id="ev_close">
+                <stimulus>ev_close</stimulus>
+                <target>closed</target>
+                <actions>
+                  <action>
+                    <verb>SetCurrentDate</verb>
+                    <params>
+                      <param xsi:type="attcode">end_date</param>
+                    </params>
+                  </action>
+                </actions>
+              </transition>
+            </transitions>
+          </state>
+          <state id="closed">
+            <flags>
+              <attribute id="end_date">
+                <read_only/>
+              </attribute>
+              <attribute id="message">
+                <read_only/>
+              </attribute>
+              <attribute id="org_id">
+                <read_only/>
+              </attribute>
+              <attribute id="start_date">
+                <read_only/>
+              </attribute>
+              <attribute id="ref">
+                <read_only/>
+              </attribute>
+              <attribute id="organizations_list">
+                <read_only/>
+              </attribute>           
+            </flags>
+            <transitions>
+            </transitions>
+            <inherit_flags_from>ongoing</inherit_flags_from>
+          </state>
+        </states>
+        <stimuli>
+          <stimulus id="ev_close" xsi:type="StimulusUserAction"/>
+        </stimuli>
+      </lifecycle>
+      <methods>
+        <method id="DBInsertNoReload">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+    public function DBInsertNoReload()
+    {
+          $oMutex = new iTopMutex('communication_insert');
+          $oMutex->Lock();
+          $iNextId = MetaModel::GetNextKey(get_class($this));
+          $sRef = sprintf('COM-%06d', $iNextId);
+          $this->Set('ref', $sRef);
+          $iKey = parent::DBInsertNoReload();
+          $oMutex->Unlock();
+          return $iKey;
+    }
+        ]]></code>
+        </method>
+        <method id="OnInsert">
+          <static>false</static>
+          <access>protected</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[ protected function OnInsert()
+  {
+    $this->Set('creation_date', time());
+    $oCurrentContact = MetaModel::GetObject('User', UserRights::GetUserId());
+    $this->Set('publisher_id', $oCurrentContact->Get('contactid'));
+  }]]></code>
+        </method>
+      </methods>
+      <presentation>
+        <list>
+          <items>
+            <item id="org_id">
+              <rank>20</rank>
+            </item>
+            <item id="start_date">
+              <rank>30</rank>
+            </item>
+            <item id="end_date">
+              <rank>40</rank>
+            </item>
+            <item id="status">
+              <rank>50</rank>
+            </item>
+          </items>
+        </list>
+        <search>
+          <items>
+            <item id="ref">
+              <rank>10</rank>
+            </item>
+            <item id="org_id">
+              <rank>20</rank>
+            </item>
+            <item id="status">
+              <rank>30</rank>
+            </item>
+            <item id="start_date">
+              <rank>40</rank>
+            </item>
+            <item id="end_date">
+              <rank>50</rank>
+            </item>
+            <item id="creation_date">
+              <rank>60</rank>
+            </item>
+            <item id="publisher_id">
+              <rank>70</rank>
+            </item>
+          </items>
+        </search>
+        <details>
+          <items>
+            <item id="col:col0">
+              <items>
+                <item id="ref">
+                  <rank>10</rank>
+                </item>
+                <item id="org_id">
+                  <rank>20</rank>
+                </item>
+                <item id="status">
+                  <rank>30</rank>
+                </item>
+                <item id="creation_date">
+                  <rank>40</rank>
+                </item>
+                <item id="start_date">
+                  <rank>50</rank>
+                </item>
+                <item id="end_date">
+                  <rank>60</rank>
+                </item>
+                <item id="publisher_id">
+                  <rank>70</rank>
+                </item>
+              </items>
+              <rank>10</rank>
+            </item>
+            <item id="col:col1">
+              <items>
+                <item id="message">
+                  <rank>10</rank>
+                </item>
+              </items>
+              <rank>20</rank>
+            </item>
+            <item id="organizations_list">
+                <rank>80</rank>
+            </item>
+          </items>
+        </details>
+      </presentation>
+      <parent>cmdbAbstractObject</parent>
+    </class>
+    <class id="lnkCommunicationToOrganization" _delta="define">
+      <parent>cmdbAbstractObject</parent>
+      <properties>
+        <is_link>1</is_link>
+        <category>bizmodel</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>lnkcommunicationtoorganization</db_table>
+        <db_key_field>id</db_key_field>
+        <db_final_class_field/>
+        <naming>
+          <attributes>
+            <attribute id="communication_id"/>
+            <attribute id="org_id"/>
+          </attributes>
+        </naming>
+        <display_template/>
+        <icon/>
+        <reconciliation>
+          <attributes>
+            <attribute id="communication_id"/>
+            <attribute id="org_id"/>
+          </attributes>
+        </reconciliation>
+      </properties>
+      <fields>
+        <field id="org_id" xsi:type="AttributeExternalKey">
+          <sql>org_id</sql>
+          <target_class>Organization</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+        </field>
+        <field id="org_name" xsi:type="AttributeExternalField">
+          <extkey_attcode>org_id</extkey_attcode>
+          <target_attcode>name</target_attcode>
+        </field>
+        <field id="communication_id" xsi:type="AttributeExternalKey">
+          <sql>communication_id</sql>
+          <target_class>Communication</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+        </field>
+        <field id="communication_ref" xsi:type="AttributeExternalField">
+          <extkey_attcode>communication_id</extkey_attcode>
+          <target_attcode>ref</target_attcode>
+        </field>
+      </fields>
+      <methods/>
+      <presentation>
+        <details>
+          <items>
+            <item id="communication_id">
+              <rank>10</rank>
+            </item>
+            <item id="org_id">
+              <rank>20</rank>
+            </item>
+          </items>
+        </details>
+        <search>
+          <items>
+            <item id="communication_id">
+              <rank>10</rank>
+            </item>
+            <item id="org_id">
+              <rank>20</rank>
+            </item>
+          </items>
+        </search>
+        <list>
+          <items>
+            <item id="communication_id">
+              <rank>10</rank>
+            </item>
+            <item id="org_id">
+              <rank>20</rank>
+            </item>
+          </items>
+        </list>
+      </presentation>
+    </class>
   </classes>
   <menus>
+    <menu xsi:type="OQLMenuNode" id="Communication" _delta="define">
+      <parent>RequestManagement</parent>
+      <rank>13</rank>
+      <oql>SELECT Communication WHERE status != "closed"</oql>
+      <do_search>1</do_search>
+    </menu>
   </menus>
+  <files>
+    <file id="communication_90109793268989a4709622ad7341c32d" xsi:type="File" _delta="define_if_not_exists">
+      <name>communication.png</name>
+      <mime_type>image/png</mime_type>
+      <width>48</width>
+      <height>48</height>
+      <data>iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEcElEQVRoge2ZbWhbVRjHf+ckTZs2023UtpSVdSCIYCf7Mhy+DQoDQaXCVmX7ImObUmEwtIjgoCIq7pNz9cOk+Ekc7IXBBr7hxhAnUmV2q07FjmZNujbp1rw1TbLmnuOHJm3arm1Oe5vbgb8Qbu7LOef/v+ec5zz3Rmitmc0bl1p9E5Z6CsQGjXbPuaCUaKm0tILl0vXjZ9tPjs0+LQoNdFza7r6VrT6shHhLQmVJhS6GYgzBB9GIOHJy10mVPzx1d1tPtcq166pPIUSLdEbiwkh8wEdr11tNwJ7pwzkeXKfbEKLFCW1myN0Hfti5d2ov/0ML1e6MIHOUEFNahdaa/d/vahQu+p0UZYrCXdvVfCIsAUSZrnFakClCTFRDbgglRhLrnZVjTvJ22gc5A8lYqs5ZOeYko5E6yBnQynJ2sVoCCimhIArdr/xvwGmMx36j92Gerd9BuavCViFpK8XF4DcEM36jckYGqlw+3tzaQbm73KiRYtlSv5VDF/aCZ26GPB9GQ6jaU7di4gGqPD5k3EMqmS66jJEBiTAWZYzWhALhok2sykmslSIUCJMeX9zEqjQAkyaGb4YWNWGbAf+dG3RdPsb14V4AsirL6d+/5EzPV1jKAqAn+BtdP3cyGA0UVafWelETtqUQ754/RCgxxLne05za9x3ne09z/KejAEghaX7kOd45d5CsNUG3/zKf7z5RVL15E3Uba6monBu6besBIURuCyAQYrpqKSQi9ym8tlgW6gnbeuDDF49y4Z9v2bbpGcrd5bRsfhkpJFJIXmjaiRSSj1s6uTLQzY5HnzeuX2vN8ECY2oYavFXTPWGbgYZ1jbz6xOtT+y7p4qXHX5lxTVP9Fprqtyy5jXx0qm2Yfv5atVFoPrRShAZCZLN6PdyHBmByOEmhpp/Iii5I8TnKUrnXm8KFMDIwcneYTDZj1IAJY5k4Q7FBozJGkzhpjXHkl8M8WdNMhXs6Emzb9PSMsBlPx/jjVo+RkNTEOGd6TpCaGDcqZxyFApl+vvjrGOFAeKq7v267TJnLA0AsFaH9bBv9d/pMq14SS5rElT4vNQ01cxakUouHZUShQhPRVITI+GjJxcMyF7K8ifazbSTSMeLpmF26imbZ60Clz0v2gQyJTNwOPcbYspDNNydKgW0rsVMmbE0lnDBhey5UahMrksyV0sSkAUtm7a54pU1YSqchZyByeyy4EonmSpkQQpAIjl2D/D80o9F4bGRl4nilz0vtBntNuN1ukvFYHHIGBDoc+DNonIsXi3eNfSaklEQHI3iENQw5Az2f+P3JeLKv79cbKMtadiP3wrtm+cNJSsndeIbxWPpKd+fgKBREISnE+5GhKL0XrxPyh8mMZ9BKg7bvW1lVQY1pTwiBu8xFmctNNBgjMhRDwHtTpwuHzeaDG49L5IEl36ISoLU+cvWY/+38/ox14NqnN19Ds19pbpVe2qL4hdJ7CsXDrB7I09oq5L+1jY8h9QZlSUffXEiXUjqr/FcfCvytO7Saff4/PO/cEzAbfdwAAAAASUVORK5CYII=</data>
+    </file>
+  </files>
   <user_rights>
     <groups>
+      <group id="Communication" _delta="define">
+        <classes>
+          <class id="Communication"/>
+        </classes>
+      </group>
     </groups>
     <profiles>
+      <profile id="20" _delta="define">
+        <name>Communication Manager</name>
+        <description>Person responsible for managing communication</description>
+        <groups>
+          <group id="Communication">
+            <actions>
+              <action id="action:write">allow</action>
+              <action id="action:bulk write">allow</action>
+              <action id="action:delete">allow</action>
+              <action id="action:bulk delete">allow</action>
+              <action id="stimulus:ev_close">allow</action>
+              <action id="action:bulk read">allow</action>
+            </actions>
+          </group>
+          <group id="*">
+            <actions>
+              <action id="action:read">allow</action>
+            </actions>
+          </group>
+        </groups>
+      </profile>
     </profiles>
   </user_rights>
 </itop_design>
