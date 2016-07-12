@@ -33,8 +33,14 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:Communication/Attribute:message+' => '',
 	'Class:Communication/Stimulus:ev_close' => 'Close',
 	'Class:Communication/Stimulus:ev_close+' => '',
-	'Class:Communication/Attribute:organizations_list' => 'Allowed organizations',
+	'Class:Communication/Attribute:organizations_list' => 'Target organizations',
 	'Class:Communication/Attribute:organizations_list+' => 'If no organization is selected, every user will be able to see it on the portal',
+	'Class:Communication/Attribute:org_match_type' => 'Target organizations...',
+	'Class:Communication/Attribute:org_match_type+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:direct' => 'Only selected',
+	'Class:Communication/Attribute:org_match_type/Value:direct+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Cascade to child organization',
+	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '',
 ));
 
 //
@@ -58,7 +64,9 @@ Dict::Add('EN US', 'English', 'English', array(
 Dict::Add('EN US', 'English', 'English', array(
 	'Menu:Communication' => 'Communications',
 	'Menu:Communication+' => 'All open Communications',
-	'Portal:Communications' => 'Communications'
+	'Portal:Communications' => 'Communications',
+	'Portal:Communication:Previous' => 'Previous',
+	'Portal:Communication:Next' => 'Next',
 ));
 
 ?>

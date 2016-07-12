@@ -24,8 +24,10 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
+			'communicationbrick.class.inc.php',
+			'communicationbrickcontroller.class.inc.php',
 			'model.itop-communications.php',
-			'main.itop-communications.php'
+			'main.itop-communications.php',
 		),
 		'webservice' => array(
 			

@@ -33,8 +33,14 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:Communication/Attribute:message+' => '',
 	'Class:Communication/Stimulus:ev_close' => 'Clore',
 	'Class:Communication/Stimulus:ev_close+' => '',
-	'Class:Communication/Attribute:organizations_list' => 'Organisations autorisées',
+	'Class:Communication/Attribute:organizations_list' => 'Organisations ciblées',
 	'Class:Communication/Attribute:organizations_list+' => 'Si aucune organisation n\'est spécifiée, la communication sera visible par tous les utilisateurs sur le portail',
+	'Class:Communication/Attribute:org_match_type' => 'Cibler les organisations...',
+	'Class:Communication/Attribute:org_match_type+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:direct' => 'sélectionnées uniquement',
+	'Class:Communication/Attribute:org_match_type/Value:direct+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'sélectionées ou en dessous',
+	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '',
 ));
 
 //
@@ -58,7 +64,9 @@ Dict::Add('FR FR', 'French', 'Français', array(
 Dict::Add('FR FR', 'French', 'Français', array(
 	'Menu:Communication' => 'Communications',
 	'Menu:Communication+' => 'Communications en cours',
-	'Portal:Communications' => 'Communications'
+	'Portal:Communications' => 'Communications',
+	'Portal:Communication:Previous' => 'Précédent',
+	'Portal:Communication:Next' => 'Suivant',
 ));
 
 ?>

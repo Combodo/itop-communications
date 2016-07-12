@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3">
-  <constants>
-    <constant id="PORTAL_COMMUNICATION_QUERY" xsi:type="string" _delta="define"><![CDATA[SELECT Communication WHERE status != 'closed' AND start_date <= NOW()]]></constant>
-  </constants>
   <classes>
     <class id="Communication" _delta="define">
       <properties>
@@ -80,6 +77,16 @@
           <ext_key_to_remote>org_id</ext_key_to_remote>
           <duplicates/>
         </field>
+        <field id="org_match_type" xsi:type="AttributeEnum">
+          <sql>org_match_type</sql>
+          <values>
+            <value id="direct">direct</value>
+            <value id="cascade">cascade</value>
+          </values>
+          <default_value>cascade</default_value>
+          <is_null_allowed>false</is_null_allowed>
+          <display_style>list</display_style>
+        </field>
       </fields>
       <lifecycle>
         <attribute>status</attribute>
@@ -136,7 +143,10 @@
               </attribute>
               <attribute id="organizations_list">
                 <read_only/>
-              </attribute>           
+              </attribute>
+              <attribute id="org_match_type">
+                <read_only/>
+              </attribute>
             </flags>
             <transitions>
             </transitions>
@@ -163,6 +173,47 @@
           $iKey = parent::DBInsertNoReload();
           $oMutex->Unlock();
           return $iKey;
+    }
+        ]]></code>
+        </method>
+        <method id="IsUserInScope">
+          <static>false</static>
+          <access>public</access>
+          <type>Custom</type>
+          <comment><![CDATA[/**
+	 * Override to filter the communications
+	 * @param User $oUser User account to check
+	 * @return bool
+	 */]]></comment>
+          <code><![CDATA[    public function IsUserInScope(User $oUser)
+    {
+		$oOrgSet = $this->Get('organizations_list');
+		$aTargetOrgs = $oOrgSet->GetColumnAsArray('org_id');
+		if (count($aTargetOrgs) == 0)
+		{
+			$bRet = true;
+		}
+		else
+		{
+			$iContact = $oUser->Get('contactid');
+			$oContact = MetaModel::GetObject('Contact', $iContact, true, true);
+			$iUserOrg = $oContact->Get('org_id');
+
+			$sMatchType = $this->Get('org_match_type');
+			if ($sMatchType == 'direct')
+			{
+				// Flat version
+				$bRet = in_array($iUserOrg, $aTargetOrgs);
+			}
+			else // 'cascade'
+			{
+				// Is the user org below or within any of the target organizations
+				$oOrgHierarchical = DBSearch::FromOQL('SELECT child FROM Organization AS root JOIN Organization AS child ON child.parent_id ABOVE root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
+				$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
+				$bRet = $oOrgHSet->Count() > 0;
+			}
+		}
+		return $bRet;
     }
         ]]></code>
         </method>
@@ -221,6 +272,9 @@
                 </item>
                 <item id="end_date">
                   <rank>60</rank>
+                </item>
+                <item id="org_match_type">
+                  <rank>70</rank>
                 </item>
               </items>
               <rank>10</rank>
@@ -372,4 +426,41 @@
       </profile>
     </profiles>
   </user_rights>
+  <module_designs>
+    <module_design id="itop-portal" xsi:type="portal">
+      <properties>
+        <themes>
+          <theme id="communication-css" _delta="define">itop-communications/communication-brick.css</theme>
+        </themes>
+      </properties>
+      <bricks>
+        <brick id="communication" xsi:type="Combodo\iTop\Portal\Brick\CommunicationBrick" _delta="define">
+          <!-- Should be the class name (eg : CommunicationBrick) -->
+          <active>true</active>
+          <!-- yes|no -->
+          <rank>1</rank>
+          <!-- float -->
+          <width>12</width>
+          <!-- integer , must be between 1 and 12 -->
+          <templates>
+            <!-- templates can either for the tile on the home page or the main page of the brick-->
+            <template id="tile">itop-communications/tile.html.twig</template>
+            <!-- <template id="page">./portal/src/views/bricks/communication/layout.html.twig</template> -->
+          </templates>
+          <tile_controller_action>\Combodo\iTop\Portal\Controller\CommunicationController::RenderTileAction</tile_controller_action>
+          <title>Portal:Communications</title>
+          <!-- string -->
+          <oql></oql>
+          <!-- Query for the displayed communications (if authorized to the current user, see Communication::IsAllowedToUser). Leave empty to preserve the default behavior. Use :now instead of NOW(). -->
+          <security>
+            <!-- Order is deny/allow Pseudo OQL traduction : WHERE user_profile NOT IN (:denied_profiles) AND user_profile IN (:allowed_profiles) -->
+            <denied_profiles/>
+            <!-- OQL query. Used only when not empty -->
+            <allowed_profiles/>
+            <!-- OQL query. Used only when not empty -->
+          </security>
+        </brick>
+      </bricks>
+    </module_design>
+  </module_designs>
 </itop_design>

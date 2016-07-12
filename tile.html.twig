@@ -1,0 +1,35 @@
+{# sample-portal-communication-brick/tile.html.twig #}
+{# Communication brick tile layout #}
+
+{% set sCarouselId = 'communication-carousel-' ~ brick.GetId %}
+
+{%  if message_count > 0 %}
+	<div class="col-xs-12 col-sm-{{ brick.GetWidth }}">
+		{% block pTileWrapper %}
+		<div class="tile tile_communication" id="brick-{{ brick.GetId }}" data-brick-id="{{ brick.GetId }}">
+			<div class="carousel slide panel panel-default text-center vertical-center" id="{{ sCarouselId }}" data-ride="carousel">
+					<div class="carousel-inner text-center" role="listbox">
+						{% for message in messages %}
+							<div class="item {% if loop.index0 == 0 %}active{% endif %}">{{ message | raw }}</div>
+						{% endfor %}
+					</div>
+					{% if message_count > 1 %}
+						<ol class="carousel-indicators">
+							{% for message in messages %}
+								<li data-target="#{{ sCarouselId }}" data-slide-to="{{ loop.index0 }}" class="{% if loop.index0 == 0 %}active{% endif %}"></li>
+							{% endfor %}
+						</ol>
+						<a class="left carousel-control" href="#{{ sCarouselId }}" role="button" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+							<span class="sr-only">{{ 'Portal:Communication:Previous'|dict_s }}</span>
+						</a>
+						<a class="right carousel-control" href="#{{ sCarouselId }}" role="button" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<span class="sr-only">{{ 'Portal:Communication:Next'|dict_s }}</span>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		{% endblock %}
+	</div>
+{% endif %}
