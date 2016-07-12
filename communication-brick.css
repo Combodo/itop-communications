@@ -1,3 +1,6 @@
+.carousel{
+	background-color: #fff;
+}
 .carousel-indicators{
 	bottom: -25px;
 }
@@ -9,6 +12,10 @@
 }
 .carousel-inner{
 	max-height: 100%;
+	line-height: 1.5em;
+	font-size: 1.2em;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #555;
 }
 .carousel-inner .item{
 	text-align: initial;
