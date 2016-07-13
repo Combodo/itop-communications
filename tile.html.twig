@@ -10,7 +10,17 @@
 			<div class="carousel slide text-center vertical-center" id="{{ sCarouselId }}" data-ride="carousel" style="height: {{ brick.GetHeight }}em;">
 				<div class="carousel-inner text-center" role="listbox">
 					{% for message in messages %}
-						<div class="item {% if loop.index0 == 0 %}active{% endif %}">{{ message | raw }}</div>
+						<div class="item{% if loop.index0 == 0 %} active{% endif %}{% if message.Get('type') != '' %} has-type message-type-{{ message.Get('type') }}{% endif %}{% if message.Get('title') != '' %} has-title{% endif %}">
+							{% if message.Get('type') != '' %}
+								<div class="message-banner tile_decoration"><span class="fa fa-{{ message.GetFontAwesomeIcon }} fa-5x"></span></div>
+							{% endif %}
+							<div class="message-content tile_body">
+								{% if message.Get('title')  != '' %}
+									<div class="message-title tile_title">{{ message.Get('title') }}</div>
+								{% endif %}
+								<div class="message-body tile_description">{{ message.Get('message') | raw }}</div>
+							</div>
+						</div>
 					{% endfor %}
 				</div>
 				{% if message_count > 1 %}

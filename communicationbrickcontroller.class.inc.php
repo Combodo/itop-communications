@@ -46,7 +46,7 @@ class CommunicationController extends BrickController
 		{
 			if ($oComm->IsUserInScope(UserRights::GetUserObject()))
 			{
-				$aData['messages'][] = $oComm->Get('message');
+				$aData['messages'][] = $oComm;
 				$iCount++;
 			}
 		}
