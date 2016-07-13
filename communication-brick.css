@@ -36,10 +36,10 @@
 	background-color: #ededed;
 	border: none;
 	font-weight: initial;
+	min-height: initial;
 }
 .home .tile_communication .carousel {
 	margin-bottom: 0px;
 	width: 100%;
-	height: 200px;
 	box-shadow: none;
 }

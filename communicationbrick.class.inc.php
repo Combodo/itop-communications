@@ -31,8 +31,10 @@ class CommunicationBrick extends PortalBrick
 {
 	const DEFAULT_VISIBLE_NAVIGATION_MENU = false;
 	const DEFAULT_SCOPE = "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
+	const DEFAULT_HEIGHT = "15";
 
 	protected $sOql;
+	protected $iHeightEm;
 
 	/**
 	 * Constructor
@@ -42,6 +44,7 @@ class CommunicationBrick extends PortalBrick
 		parent::__construct();
 
 		$this->sOql = static::DEFAULT_SCOPE;
+		$this->iHeightEm = static::DEFAULT_HEIGHT;
 	}
 
 
@@ -64,6 +67,9 @@ class CommunicationBrick extends PortalBrick
 				case 'oql':
 					$this->SetOql($oBrickSubNode->GetText(static::DEFAULT_SCOPE));
 					break;
+				case 'height':
+					$this->SetHeight($oBrickSubNode->GetText(static::DEFAULT_HEIGHT));
+					break;
 			}
 		}
 
@@ -77,5 +83,13 @@ class CommunicationBrick extends PortalBrick
 	public function GetOql()
 	{
 		return $this->sOql;
+	}
+	public function SetHeight($iHeightEm)
+	{
+		$this->iHeightEm = $iHeightEm;
+	}
+	public function GetHeight()
+	{
+		return $this->iHeightEm;
 	}
 }

@@ -7,7 +7,7 @@
 	<div class="col-xs-12 col-sm-{{ brick.GetWidth }}">
 		{% block pTileWrapper %}
 		<div class="tile tile_communication" id="brick-{{ brick.GetId }}" data-brick-id="{{ brick.GetId }}">
-			<div class="carousel slide text-center vertical-center" id="{{ sCarouselId }}" data-ride="carousel">
+			<div class="carousel slide text-center vertical-center" id="{{ sCarouselId }}" data-ride="carousel" style="height: {{ brick.GetHeight }}em;">
 				<div class="carousel-inner text-center" role="listbox">
 					{% for message in messages %}
 						<div class="item {% if loop.index0 == 0 %}active{% endif %}">{{ message | raw }}</div>

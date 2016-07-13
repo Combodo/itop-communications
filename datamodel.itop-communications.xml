@@ -440,6 +440,8 @@
           <!-- yes|no -->
           <rank>1</rank>
           <!-- float -->
+          <height>15</height>
+          <!-- integer , size in em -->
           <width>12</width>
           <!-- integer , must be between 1 and 12 -->
           <templates>
