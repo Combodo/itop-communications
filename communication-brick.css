@@ -1,36 +1,37 @@
-.carousel{
+.carousel {
 	background-color: #fff;
 }
-.carousel-indicators{
-	bottom: -25px;
+.carousel-indicators {
+	bottom: -40px;
 }
-.carousel-indicators li{
+.carousel-indicators li {
 	border-color: #d46201;
 }
-.carousel-indicators .active{
+.carousel-indicators .active {
 	background-color: #d46201;
 }
-.carousel-inner{
+.carousel-inner {
 	max-height: 100%;
 }
-.carousel-inner .item{
+.carousel-inner .message-body {
 	text-align: initial;
 }
-.carousel-inner .item.has-type{
+.carousel-inner .item.has-type {
 	padding: 30px 40px 30px 40px;
 }
-.carousel-inner .item.has-title{
+.carousel-inner .item.has-title {
 	padding: 30px 40px 30px 40px;
 }
-.carousel-inner .item img {
+.carousel-inner .item img,
+#carousel-popup-modal img {
 	max-width: 100%;
 	height: initial !important;
 }
-.carousel-control{
+.carousel-control {
 	width: 5%;
 }
 .carousel-control.left,
-.carousel-control.right{
+.carousel-control.right {
 	background: none;
 }
 .home .tile.tile_communication {
@@ -45,9 +46,24 @@
 	width: 100%;
 	box-shadow: none;
 }
-.message-body{
+.message-body {
 	line-height: 1.5em;
 }
-.message-banner {
-	color: #d46201;
+.slide .item {
+	cursor: pointer;
+}
+#brick-communication .tile_description {
+	display: block;
+}
+#brick-communication .has-no-type .tile_body {
+	padding-left: 0;
+}
+@media (max-width: 767px) {
+	#brick-communication .tile_decoration {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		position: static;
+		margin-bottom: -2em;
+	}
 }

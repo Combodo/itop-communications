@@ -61,16 +61,17 @@
           <extkey_attcode>org_id</extkey_attcode>
           <target_attcode>name</target_attcode>
         </field>
-        <field id="type" xsi:type="AttributeEnum">
-          <sql>type</sql>
+        <field id="icon" xsi:type="AttributeEnum">
+          <sql>icon</sql>
           <values>
+            <value id="none">none</value>
             <value id="information">information</value>
             <value id="warning">warning</value>
             <value id="tip">tip</value>
             <value id="scoop">scoop</value>
           </values>
-          <default_value></default_value>
-          <is_null_allowed>true</is_null_allowed>
+          <default_value>none</default_value>
+          <is_null_allowed>false</is_null_allowed>
           <display_style>list</display_style>
         </field>
         <field id="title" xsi:type="AttributeString">
@@ -126,6 +127,9 @@
               <attribute id="start_date">
                 <mandatory/>
               </attribute>
+              <attribute id="end_date">
+                <must_prompt/>
+              </attribute>
             </flags>
             <transitions>
               <transition id="ev_close">
@@ -143,6 +147,7 @@
             </transitions>
           </state>
           <state id="closed">
+            <inherit_flags_from>ongoing</inherit_flags_from>
             <flags>
               <attribute id="end_date">
                 <read_only/>
@@ -167,12 +172,17 @@
               </attribute>
             </flags>
             <transitions>
+              <transition id="ev_reopen">
+                <stimulus>ev_reopen</stimulus>
+                <target>ongoing</target>
+                <actions></actions>
+              </transition>
             </transitions>
-            <inherit_flags_from>ongoing</inherit_flags_from>
           </state>
         </states>
         <stimuli>
           <stimulus id="ev_close" xsi:type="StimulusUserAction"/>
+          <stimulus id="ev_reopen" xsi:type="StimulusUserAction"/>
         </stimuli>
       </lifecycle>
       <methods>
@@ -245,7 +255,7 @@
 	 */]]></comment>
           <code><![CDATA[    public function GetFontAwesomeIcon()
     {
-		switch ($this->Get('type'))
+		switch ($this->Get('icon'))
 		{
 			case 'information':
 				$sIcon = 'info-circle';
@@ -266,6 +276,19 @@
     }
         ]]></code>
         </method>
+        <method id="DoCheckToWrite">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[public function DoCheckToWrite()
+  {
+    parent::DoCheckToWrite();
+    if ($this->Get('start_date') > $this->Get('end_date'))
+    {
+      $this->m_aCheckIssues[] = Dict::Format('Class:Communication/Error:EndDateMustBeGreaterThanStartDate');
+    }
+  }]]></code>
+        </method>
       </methods>
       <presentation>
         <list>
@@ -282,7 +305,7 @@
             <item id="status">
               <rank>50</rank>
             </item>
-            <item id="type">
+            <item id="icon">
               <rank>60</rank>
             </item>
           </items>
@@ -304,7 +327,7 @@
             <item id="end_date">
               <rank>50</rank>
             </item>
-            <item id="type">
+            <item id="icon">
               <rank>60</rank>
             </item>
           </items>
@@ -336,7 +359,7 @@
             </item>
             <item id="col:col1">
               <items>
-                <item id="type">
+                <item id="icon">
                   <rank>10</rank>
                 </item>
                 <item id="title">
@@ -440,8 +463,8 @@
   </classes>
   <menus>
     <menu xsi:type="OQLMenuNode" id="Communication" _delta="define">
-      <parent>RequestManagement</parent>
-      <rank>13</rank>
+      <parent>ServiceManagement</parent>
+      <rank>15</rank>
       <oql>SELECT Communication WHERE status != "closed"</oql>
       <do_search>1</do_search>
     </menu>
@@ -452,7 +475,38 @@
       <mime_type>image/png</mime_type>
       <width>48</width>
       <height>48</height>
-      <data>iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEcElEQVRoge2ZbWhbVRjHf+ckTZs2023UtpSVdSCIYCf7Mhy+DQoDQaXCVmX7ImObUmEwtIjgoCIq7pNz9cOk+Ekc7IXBBr7hxhAnUmV2q07FjmZNujbp1rw1TbLmnuOHJm3arm1Oe5vbgb8Qbu7LOef/v+ec5zz3Rmitmc0bl1p9E5Z6CsQGjXbPuaCUaKm0tILl0vXjZ9tPjs0+LQoNdFza7r6VrT6shHhLQmVJhS6GYgzBB9GIOHJy10mVPzx1d1tPtcq166pPIUSLdEbiwkh8wEdr11tNwJ7pwzkeXKfbEKLFCW1myN0Hfti5d2ov/0ML1e6MIHOUEFNahdaa/d/vahQu+p0UZYrCXdvVfCIsAUSZrnFakClCTFRDbgglRhLrnZVjTvJ22gc5A8lYqs5ZOeYko5E6yBnQynJ2sVoCCimhIArdr/xvwGmMx36j92Gerd9BuavCViFpK8XF4DcEM36jckYGqlw+3tzaQbm73KiRYtlSv5VDF/aCZ26GPB9GQ6jaU7di4gGqPD5k3EMqmS66jJEBiTAWZYzWhALhok2sykmslSIUCJMeX9zEqjQAkyaGb4YWNWGbAf+dG3RdPsb14V4AsirL6d+/5EzPV1jKAqAn+BtdP3cyGA0UVafWelETtqUQ754/RCgxxLne05za9x3ne09z/KejAEghaX7kOd45d5CsNUG3/zKf7z5RVL15E3Uba6monBu6besBIURuCyAQYrpqKSQi9ym8tlgW6gnbeuDDF49y4Z9v2bbpGcrd5bRsfhkpJFJIXmjaiRSSj1s6uTLQzY5HnzeuX2vN8ECY2oYavFXTPWGbgYZ1jbz6xOtT+y7p4qXHX5lxTVP9Fprqtyy5jXx0qm2Yfv5atVFoPrRShAZCZLN6PdyHBmByOEmhpp/Iii5I8TnKUrnXm8KFMDIwcneYTDZj1IAJY5k4Q7FBozJGkzhpjXHkl8M8WdNMhXs6Emzb9PSMsBlPx/jjVo+RkNTEOGd6TpCaGDcqZxyFApl+vvjrGOFAeKq7v267TJnLA0AsFaH9bBv9d/pMq14SS5rElT4vNQ01cxakUouHZUShQhPRVITI+GjJxcMyF7K8ifazbSTSMeLpmF26imbZ60Clz0v2gQyJTNwOPcbYspDNNydKgW0rsVMmbE0lnDBhey5UahMrksyV0sSkAUtm7a54pU1YSqchZyByeyy4EonmSpkQQpAIjl2D/D80o9F4bGRl4nilz0vtBntNuN1ukvFYHHIGBDoc+DNonIsXi3eNfSaklEQHI3iENQw5Az2f+P3JeLKv79cbKMtadiP3wrtm+cNJSsndeIbxWPpKd+fgKBREISnE+5GhKL0XrxPyh8mMZ9BKg7bvW1lVQY1pTwiBu8xFmctNNBgjMhRDwHtTpwuHzeaDG49L5IEl36ISoLU+cvWY/+38/ox14NqnN19Ds19pbpVe2qL4hdJ7CsXDrB7I09oq5L+1jY8h9QZlSUffXEiXUjqr/FcfCvytO7Saff4/PO/cEzAbfdwAAAAASUVORK5CYII=</data>
+      <data>iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAYAAABXuSs3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
+bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
+eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEz
+NDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
+dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv
+IiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RS
+ZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpD
+cmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlE
+PSJ4bXAuaWlkOkJENUU4NzRBNTI3OTExRTY4QkY2QTBBMTBCNzgyQzdBIiB4bXBNTTpEb2N1bWVu
+dElEPSJ4bXAuZGlkOkJENUU4NzRCNTI3OTExRTY4QkY2QTBBMTBCNzgyQzdBIj4gPHhtcE1NOkRl
+cml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkQ1RTg3NDg1Mjc5MTFFNjhCRjZB
+MEExMEI3ODJDN0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QkQ1RTg3NDk1Mjc5MTFFNjhC
+RjZBMEExMEI3ODJDN0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1l
+dGE+IDw/eHBhY2tldCBlbmQ9InIiPz6Ai16uAAADdklEQVR42uyZeUgUYRjGd7etqOgmSlTCIqSC
+sILu64+iGwmCoCCi+4D+ig7Kig6ooD8sEjqggw66KLoo1CAqLaGwQCoLMyIzKyuodE3bnpd9Bj6G
+cWd2ZnadDV/4KTvf+O3DzPs97/t9+sPhsC8ZI+BL0mgVnugIyo9POX29pqsHyAM9+fuKOth757uI
+cI/FEHASZPHzZDAFFHg5VRaCe4poLTYCvxeFp4IzfNLdDMbTtLT2kvAF4CGYr1yrBheAVmSavOQq
+E8ENcBqo7lAIJoFT+vRoaeHDwXlwF8xUrteBDWAaeAW6mtphAkJsbRxYSmH67y2g6KfKtXBLCG8D
+BtDaZtPS+hjcVwp2g0u2CpASGWAC6BjDHPJk2oFOfLLpYBDIBG2b+ZsycIAuErJdORmrwS7QPU5v
+oR4Ug0PgNvjluOQj5nBCt6MGPGEq3Aevbc7zF/wxEr7MJaEh2pgsshJQCWpdmLczGAke64VnuCT8
+J1ijfzouhPj8I3AdrARVAeVVuBF+Pp14hTjUnmTtx8ckq/BGVbg/iYRfUxenW1t9med3HMRKd1gF
+roLtqvAyVjun0QVcBG/AS3p4qfZ6HYTMNwp819thLshm6XYSUuJnGZR3sbKzrJx1NvP6h1FbK438
+PFBuYI1O02gwWMI++xlYD/rZsNlgc72K5M8ddnUdKDgFnOPnaFHLpkl2LgNBf86TqbtPru0FW7iB
+yGXv7ajJ0pr558rnbAuiP4IZzGU1JO2Gcoc+XfNfpYSv4rbtINgPvrl5IJRlYY61BqIlGthbSMc5
+lsL3sfFSF/Nm5v4iN4X3Mhn/AvItflcxdznDmCpflTFJqeN0pFQraysQYyoZNVX1MabnB+56JI2O
+8M1oMZdvaarZvGbCG0zGUxx0lu/BCjAeFOnOWG6BnGhP3Ux4jcl4e7DJoV2W8Dhim3J+EmBK+ZU9
+bDgW4RUWvrjC5zykf99B93lrMF6ur75mwoss7A0LXexJ8uk+l5VrUjG3xpoqlSzZ0SLN5YaqmlVc
+bPQE10CpnXOVB2BElPF1vsj5dchF8U1cnLZdxcd9XtjkSC0v0U25FeFyrPDC5J7F4HCMB0lxFy6v
+7aaF+5b7IoeZQa8IlzjGZipafOZiakyEcKtPR3x0NPtqsat0do0hlnDpQ4665OnWGvTW/yy3Cv/P
+hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
     </file>
   </files>
   <user_rights>
@@ -475,6 +529,7 @@
               <action id="action:delete">allow</action>
               <action id="action:bulk delete">allow</action>
               <action id="stimulus:ev_close">allow</action>
+              <action id="stimulus:ev_reopen">allow</action>
               <action id="action:bulk read">allow</action>
             </actions>
           </group>
