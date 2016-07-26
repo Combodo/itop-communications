@@ -5,7 +5,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'itop-communications/1.0.0',
+	'itop-communications/1.0.1',
 	array(
 		// Identification
 		//
@@ -15,7 +15,8 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-portal/1.0.0'
+			'itop-portal/1.0.1',
+			'itop-service-mgmt/2.3.0||itop-service-mgmt-provider/2.3.0', // because of the menu
 		),
 		'mandatory' => false,
 		'visible' => true,
