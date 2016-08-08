@@ -44,6 +44,7 @@ class CommunicationController extends BrickController
 		$iCount = 0;
 		while ($oComm = $oSet->Fetch())
 		{
+			$oComm->Reload(true /* allow all data */); // Make sure that all the fields are loaded
 			if ($oComm->IsUserInScope(UserRights::GetUserObject()))
 			{
 				$aData['messages'][] = $oComm;
