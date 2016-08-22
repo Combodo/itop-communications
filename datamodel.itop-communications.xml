@@ -236,7 +236,7 @@
 			else // 'cascade'
 			{
 				// Is the user org below or within any of the target organizations
-				$oOrgHierarchical = DBSearch::FromOQL('SELECT child FROM Organization AS child JOIN Organization AS root ON child.parent_id ABOVE root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');	
+				$oOrgHierarchical = DBSearch::FromOQL('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
 				$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
 				$bRet = $oOrgHSet->Count() > 0;
 			}
