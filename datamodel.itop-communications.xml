@@ -518,9 +518,9 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
       </group>
     </groups>
     <profiles>
-      <profile id="20" _delta="define">
+      <profile id="107" _delta="define">
         <name>Communication Manager</name>
-        <description>Person responsible for managing communication</description>
+        <description>Person responsible for managing communications to the customers</description>
         <groups>
           <group id="Communication">
             <actions>
