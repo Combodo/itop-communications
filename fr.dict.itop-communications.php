@@ -5,11 +5,9 @@
  * @copyright   Copyright (C) 2013 XXXXX
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 //
 // Class: Communication
 //
-
 Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:Communication' => 'Communication',
 	'Class:Communication+' => '',
@@ -85,5 +83,3 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Portal:Communication:Previous' => 'Précédent',
 	'Portal:Communication:Next' => 'Suivant',
 ));
-
-?>
