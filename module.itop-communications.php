@@ -5,7 +5,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'itop-communications/1.0.9',
+	'itop-communications/1.0.10',
 	array(
 		// Identification
 		//
