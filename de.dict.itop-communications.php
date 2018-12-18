@@ -5,11 +5,9 @@
  * @copyright   Copyright (C) 2017/18 ITOMIG GmbH
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 //
 // Class: Communication
 //
-
 Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Class:Communication' => 'Mitteilung',
 	'Class:Communication+' => '',
@@ -85,5 +83,3 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Portal:Communication:Previous' => 'Vorherige',
 	'Portal:Communication:Next' => 'Nächste',
 ));
-
-?>

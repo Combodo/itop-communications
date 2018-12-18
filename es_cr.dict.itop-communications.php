@@ -5,12 +5,10 @@
  * @copyright   Copyright (C) 2016 COMBODO SARL
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 //
 // Class: Communication
 //
-
-Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
 	'Class:Communication' => 'Comunicación',
 	'Class:Communication+' => '',
 	'Class:Communication/Attribute:ref' => 'Ref',
@@ -64,7 +62,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 // Class: lnkCommunicationToOrganization
 //
 
-Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
 	'Class:lnkCommunicationToOrganization' => 'Relación Comunicación / Organización',
 	'Class:lnkCommunicationToOrganization+' => '',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id' => 'Organización',
@@ -78,7 +76,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 ));
 
 
-Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
 	'Menu:Communication' => 'Comunicaciones',
 	'Menu:Communication+' => 'Todas las comunicaciones abiertas',
 	'Portal:Communications' => 'Communicaciones',
