@@ -215,7 +215,8 @@
 	 */]]></comment>
           <code><![CDATA[    public function IsUserInScope(User $oUser)
     {
-		$oOrgSet = $this->Get('organizations_list');
+		$oOrgSearch = DBSearch::FromOQL_AllData('SELECT lnkCommunicationToOrganization WHERE communication_id = :communication_id');
+		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array('communication_id' => $this->GetKey()));
 		$aTargetOrgs = $oOrgSet->GetColumnAsArray('org_id');
 		if (count($aTargetOrgs) == 0)
 		{
@@ -236,7 +237,7 @@
 			else // 'cascade'
 			{
 				// Is the user org below or within any of the target organizations
-				$oOrgHierarchical = DBSearch::FromOQL('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
+				$oOrgHierarchical = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
 				$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
 				$bRet = $oOrgHSet->Count() > 0;
 			}
