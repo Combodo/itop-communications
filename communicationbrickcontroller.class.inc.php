@@ -30,9 +30,14 @@ use AttributeDateTime;
 
 class CommunicationController extends BrickController
 {
-	public function RenderTileAction(Request $oRequest, Application $oApp, $sBrickId)
+	public function RenderTileAction(Request $oRequest, $sBrickId)
 	{
-		$oBrick = ApplicationHelper::GetLoadedBrickFromId($oApp, $sBrickId);
+		/** @var \Combodo\iTop\Portal\Brick\BrickCollection $oBrickCollection */
+		$oBrickCollection = $this->get('brick_collection');
+		
+		/** @var \Combodo\iTop\Portal\Brick\CommunicationBrick $oBrick */
+		$oBrick = $oBrickCollection->GetBrickById($sBrickId);
+		
 		$aData = array(
 			'brick' => $oBrick
 		);
@@ -52,7 +57,7 @@ class CommunicationController extends BrickController
 			}
 		}
 		$aData['message_count'] = $iCount;
-		return $oApp['twig']->render($oBrick->GetTileTemplatePath(), $aData);
+		return $this->render($oBrick->GetTileTemplatePath(), $aData);
 	}
 
 }

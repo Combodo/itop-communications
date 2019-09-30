@@ -5,7 +5,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'itop-communications/1.0.10-dev',
+	'itop-communications/1.1.0-dev',
 	array(
 		// Identification
 		//
@@ -15,7 +15,7 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-portal-base/1.0.1',
+			'itop-portal-base/2.7.0',
 			'itop-service-mgmt/2.3.0||itop-service-mgmt-provider/2.3.0', // because of the menu
 		),
 		'mandatory' => false,
@@ -25,6 +25,7 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
+			'../itop-portal-base/portal/vendor/autoload.php',
 			'communicationbrick.class.inc.php',
 			'communicationbrickcontroller.class.inc.php',
 			'model.itop-communications.php',
