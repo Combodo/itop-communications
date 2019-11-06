@@ -193,14 +193,10 @@
           <code><![CDATA[
     public function DBInsertNoReload()
     {
-          $oMutex = new iTopMutex('communication_insert');
-          $oMutex->Lock();
-          $iNextId = MetaModel::GetNextKey(get_class($this));
-          $sRef = sprintf('COM-%06d', $iNextId);
+          $iCounter = ItopCounter::IncClass(get_class($this));
+          $sRef = sprintf('COM-%06d', $iCounter);
           $this->Set('ref', $sRef);
-          $iKey = parent::DBInsertNoReload();
-          $oMutex->Unlock();
-          return $iKey;
+          return parent::DBInsertNoReload();
     }
         ]]></code>
         </method>
