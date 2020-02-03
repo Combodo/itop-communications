@@ -543,7 +543,7 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
     <module_design id="itop-portal" xsi:type="portal">
       <properties>
         <themes>
-          <theme id="communication-css" _delta="define">itop-communications/communication-brick.css</theme>
+          <theme id="communication-css" _delta="define">itop-communications/asset/css/communication-brick.css</theme>
         </themes>
       </properties>
       <bricks>
@@ -559,7 +559,7 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
           <!-- integer , must be between 1 and 12 -->
           <templates>
             <!-- templates can either for the tile on the home page or the main page of the brick-->
-            <template id="tile">itop-communications/tile.html.twig</template>
+            <template id="tile">itop-communications/view/tile.html.twig</template>
             <!-- <template id="page">./portal/src/views/bricks/communication/layout.html.twig</template> -->
           </templates>
           <tile_controller_action>\Combodo\iTop\Portal\Controller\CommunicationController::RenderTileAction</tile_controller_action>
