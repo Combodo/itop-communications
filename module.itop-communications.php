@@ -34,7 +34,7 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-portal-base/2.7.0',
+			'itop-portal-base/1.0.1',
 			'itop-service-mgmt/2.3.0||itop-service-mgmt-provider/2.3.0', // because of the menu
 		),
 		'mandatory' => false,
@@ -46,10 +46,8 @@ SetupWebPage::AddModule(
 		'datamodel' => array(
 			// Explicitly load classes from DM
 			'model.itop-communications.php',
-			// Explicitly load classes for APIs
-			'src/BackgroundProcess/AutoCloseCommunication.php',
-			// Autoloader for module classes
-			'vendor/autoload.php',
+			// Compatibility layer
+			'compatibilitybridge.php',
 		),
 		'webservice' => array(
 			

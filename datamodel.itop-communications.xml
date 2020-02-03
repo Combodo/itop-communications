@@ -193,10 +193,31 @@
           <code><![CDATA[
     public function DBInsertNoReload()
     {
-          $iCounter = ItopCounter::IncClass(get_class($this));
+          // N°2407: Temp. backward compatibility with iTop 2.6 and older
+          // Remove usage of iTopMutex / MetaModel::GetNextKey() in next functional version of the extension
+          if (!is_callable(array('ItopCounter', 'IncClass')))
+          {
+            $oMutex = new iTopMutex('communication_insert');
+            $oMutex->Lock();
+            $iCounter = MetaModel::GetNextKey(get_class($this));
+          }
+          else
+          {
+            $iCounter = ItopCounter::IncClass(get_class($this));
+          }
+
           $sRef = sprintf('COM-%06d', $iCounter);
           $this->Set('ref', $sRef);
-          return parent::DBInsertNoReload();
+          $iKey = parent::DBInsertNoReload();
+
+          // N°2407: Temp. backward compatibility with iTop 2.6 and older
+          // Remove usage of iTopMutex / MetaModel::GetNextKey() in next functional version of the extension
+          if (!is_callable(array('ItopCounter', 'IncClass')))
+          {
+            $oMutex->Unlock();
+          }
+
+          return $iKey;
     }
         ]]></code>
         </method>
