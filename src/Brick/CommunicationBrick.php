@@ -1,21 +1,22 @@
 <?php
 
-// Copyright (C) 2010-2015 Combodo SARL
-//
-//   This file is part of iTop.
-//
-//   iTop is free software; you can redistribute it and/or modify	
-//   it under the terms of the GNU Affero General Public License as published by
-//   the Free Software Foundation, either version 3 of the License, or
-//   (at your option) any later version.
-//
-//   iTop is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with iTop. If not, see <http://www.gnu.org/licenses/>
+/**
+ * Copyright (C) 2013-2020 Combodo SARL
+ *
+ * This file is part of iTop.
+ *
+ * iTop is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * iTop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ */
 
 namespace Combodo\iTop\Portal\Brick;
 
@@ -37,7 +38,7 @@ class CommunicationBrick extends PortalBrick
 	protected $iHeightEm;
 
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
 	public function __construct()
 	{
@@ -49,11 +50,7 @@ class CommunicationBrick extends PortalBrick
 
 
 	/**
-	 * Load the brick's data from the xml passed as a ModuleDesignElement.
-	 * This is used to set all the brick attributes at once.
-	 *
-	 * @param \Combodo\iTop\DesignElement $oMDElement
-	 * @return CreateBrick
+	 * @inheritDoc
 	 */
 	public function LoadFromXml(DesignElement $oMDElement)
 	{
@@ -84,10 +81,18 @@ class CommunicationBrick extends PortalBrick
 	{
 		return $this->sOql;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function SetHeight($iHeightEm)
 	{
 		$this->iHeightEm = $iHeightEm;
 	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function GetHeight()
 	{
 		return $this->iHeightEm;

@@ -1,45 +1,59 @@
 <?php
 
-// Copyright (C) 2010-2015 Combodo SARL
-//
-//   This file is part of iTop.
-//
-//   iTop is free software; you can redistribute it and/or modify	
-//   it under the terms of the GNU Affero General Public License as published by
-//   the Free Software Foundation, either version 3 of the License, or
-//   (at your option) any later version.
-//
-//   iTop is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with iTop. If not, see <http://www.gnu.org/licenses/>
+/**
+ * Copyright (C) 2013-2020 Combodo SARL
+ *
+ * This file is part of iTop.
+ *
+ * iTop is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * iTop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ */
 
 namespace Combodo\iTop\Portal\Controller;
 
-use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
-use Combodo\iTop\Portal\Controller\BrickController;
-use Combodo\iTop\Portal\Helper\ApplicationHelper;
+use AttributeDateTime;
 use DBObjectSearch;
 use DBObjectSet;
+use Symfony\Component\HttpFoundation\Request;
 use UserRights;
-use AttributeDateTime;
 
+/**
+ * Class CommunicationController
+ *
+ * @package Combodo\iTop\Portal\Controller
+ */
 class CommunicationController extends BrickController
 {
+	/**
+	 * @param \Symfony\Component\HttpFoundation\Request $oRequest
+	 * @param                                           $sBrickId
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @throws \Combodo\iTop\Portal\Brick\BrickNotFoundException
+	 * @throws \CoreException
+	 * @throws \CoreUnexpectedValue
+	 * @throws \MySQLException
+	 * @throws \OQLException
+	 */
 	public function RenderTileAction(Request $oRequest, $sBrickId)
 	{
 		/** @var \Combodo\iTop\Portal\Brick\BrickCollection $oBrickCollection */
 		$oBrickCollection = $this->get('brick_collection');
-		
+
 		/** @var \Combodo\iTop\Portal\Brick\CommunicationBrick $oBrick */
 		$oBrick = $oBrickCollection->GetBrickById($sBrickId);
-		
+
 		$aData = array(
-			'brick' => $oBrick
+			'brick' => $oBrick,
 		);
 
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
@@ -57,6 +71,7 @@ class CommunicationController extends BrickController
 			}
 		}
 		$aData['message_count'] = $iCount;
+
 		return $this->render($oBrick->GetTileTemplatePath(), $aData);
 	}
 
