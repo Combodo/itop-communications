@@ -1,0 +1,8 @@
+{
+  "license": "Combodo Software License",
+  "autoload": {
+    "psr-4": {
+      "Combodo\\iTop\\Portal\\": "src/"
+    }
+  }
+}

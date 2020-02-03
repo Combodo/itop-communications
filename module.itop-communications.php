@@ -26,7 +26,7 @@ SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
 	'itop-communications/1.1.0-dev',
 	array(
-		// Identificationc
+		// Identification
 		//
 		'label' => 'Communications to the Customers',
 		'category' => 'portal',
