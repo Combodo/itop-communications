@@ -578,12 +578,6 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
           <!-- integer , size in em -->
           <width>12</width>
           <!-- integer , must be between 1 and 12 -->
-          <templates>
-            <!-- templates can either for the tile on the home page or the main page of the brick-->
-            <template id="tile">itop-communications/view/tile.html.twig</template>
-            <!-- <template id="page">./portal/src/views/bricks/communication/layout.html.twig</template> -->
-          </templates>
-          <tile_controller_action>\Combodo\iTop\Portal\Controller\CommunicationController::RenderTileAction</tile_controller_action>
           <title>Portal:Communications</title>
           <!-- string -->
           <oql></oql>
