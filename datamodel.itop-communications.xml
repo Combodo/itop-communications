@@ -562,11 +562,6 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
   </user_rights>
   <module_designs>
     <module_design id="itop-portal" xsi:type="portal">
-      <properties>
-        <themes>
-          <theme id="communication-css" _delta="define">itop-communications/asset/css/communication-brick.css</theme>
-        </themes>
-      </properties>
       <bricks>
         <brick id="communication" xsi:type="Combodo\iTop\Portal\Brick\CommunicationBrick" _delta="define">
           <!-- Should be the class name (eg : CommunicationBrick) -->

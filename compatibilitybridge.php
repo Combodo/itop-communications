@@ -26,6 +26,7 @@ if(file_exists(APPROOT . 'env-' . utils::GetCurrentEnvironment() . '/itop-portal
 {
 	// Explicitly load classes for APIs
 	require_once __DIR__ . '/src/BackgroundProcess/AutoCloseCommunication.php';
+	require_once __DIR__ . '/src/Hook/CommunicationBrickPortalUIExtension.php';
 	// Autoloader for module classes
 	require_once __DIR__ . '/vendor/autoload.php';
 }
@@ -37,4 +38,6 @@ else
 	require_once __DIR__ . '/legacy/communicationbrickcontroller.class.inc.php';
 	// Background process
 	require_once __DIR__ . '/legacy/main.itop-communications.php';
+	// APIs
+	require_once __DIR__ . '/legacy/communicationbrickportaluiextension.class.inc.php';
 }
