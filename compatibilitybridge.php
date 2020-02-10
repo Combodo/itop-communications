@@ -19,7 +19,7 @@
  */
 
 // IMPORTANT: This is a temporary compatibility bridge to enable a smooth migration from iTop 2.6- to iTop 2.7+.
-// In the next version of the extension, this will be remove and the require_once from the 2.7 will be moved to the 'datamodel' section of the module.itop-portal-url-brick.php file.
+// In the next version of the extension, this will be remove and the require_once from the 2.7 will be moved to the 'datamodel' section of the module.itop-communications.php file.
 
 // iTop 2.7 and newer
 if(file_exists(APPROOT . 'env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/vendor/autoload.php'))
