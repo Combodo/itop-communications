@@ -193,13 +193,30 @@
           <code><![CDATA[
     public function DBInsertNoReload()
     {
-          $oMutex = new iTopMutex('communication_insert');
-          $oMutex->Lock();
-          $iNextId = MetaModel::GetNextKey(get_class($this));
-          $sRef = sprintf('COM-%06d', $iNextId);
+          // N°2407: Temp. backward compatibility with iTop 2.6 and older
+          // Remove usage of iTopMutex / MetaModel::GetNextKey() in next functional version of the extension
+          if (!is_callable(array('ItopCounter', 'IncClass')))
+          {
+            $oMutex = new iTopMutex('communication_insert');
+            $oMutex->Lock();
+            $iCounter = MetaModel::GetNextKey(get_class($this));
+          }
+          else
+          {
+            $iCounter = ItopCounter::IncClass(get_class($this));
+          }
+
+          $sRef = sprintf('COM-%06d', $iCounter);
           $this->Set('ref', $sRef);
           $iKey = parent::DBInsertNoReload();
-          $oMutex->Unlock();
+
+          // N°2407: Temp. backward compatibility with iTop 2.6 and older
+          // Remove usage of iTopMutex / MetaModel::GetNextKey() in next functional version of the extension
+          if (!is_callable(array('ItopCounter', 'IncClass')))
+          {
+            $oMutex->Unlock();
+          }
+
           return $iKey;
     }
         ]]></code>
@@ -215,7 +232,8 @@
 	 */]]></comment>
           <code><![CDATA[    public function IsUserInScope(User $oUser)
     {
-		$oOrgSet = $this->Get('organizations_list');
+		$oOrgSearch = DBSearch::FromOQL_AllData('SELECT lnkCommunicationToOrganization WHERE communication_id = :communication_id');
+		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array('communication_id' => $this->GetKey()));
 		$aTargetOrgs = $oOrgSet->GetColumnAsArray('org_id');
 		if (count($aTargetOrgs) == 0)
 		{
@@ -236,7 +254,7 @@
 			else // 'cascade'
 			{
 				// Is the user org below or within any of the target organizations
-				$oOrgHierarchical = DBSearch::FromOQL('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
+				$oOrgHierarchical = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
 				$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
 				$bRet = $oOrgHSet->Count() > 0;
 			}
@@ -544,11 +562,6 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
   </user_rights>
   <module_designs>
     <module_design id="itop-portal" xsi:type="portal">
-      <properties>
-        <themes>
-          <theme id="communication-css" _delta="define">itop-communications/communication-brick.css</theme>
-        </themes>
-      </properties>
       <bricks>
         <brick id="communication" xsi:type="Combodo\iTop\Portal\Brick\CommunicationBrick" _delta="define">
           <!-- Should be the class name (eg : CommunicationBrick) -->
@@ -560,12 +573,6 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
           <!-- integer , size in em -->
           <width>12</width>
           <!-- integer , must be between 1 and 12 -->
-          <templates>
-            <!-- templates can either for the tile on the home page or the main page of the brick-->
-            <template id="tile">itop-communications/tile.html.twig</template>
-            <!-- <template id="page">./portal/src/views/bricks/communication/layout.html.twig</template> -->
-          </templates>
-          <tile_controller_action>\Combodo\iTop\Portal\Controller\CommunicationController::RenderTileAction</tile_controller_action>
           <title>Portal:Communications</title>
           <!-- string -->
           <oql></oql>
