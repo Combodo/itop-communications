@@ -29,7 +29,7 @@
 						<div class="item{% if loop.index0 == 0 %} active{% endif %}{% if message.Get('icon') != 'none' %} has-type message-type-{{ message.Get('icon') }}{% else %} has-no-type {% endif %}{% if message.Get('title') != '' %} has-title{% endif %}">
 							
 							{% if message.Get('icon') != 'none' %}
-								<a><div class="message-banner tile_decoration"><span class="icon fa fa-{{ message.GetFontAwesomeIcon }} fa-2x"></span></div></a>
+								<a><div class="message-banner tile_decoration"><span class="icon fas fa-{{ message.GetFontAwesomeIcon }} fa-2x"></span></div></a>
 							{% endif %}
 							<div class="message-content tile_body">
 								{% if message.Get('title')  != '' %}

@@ -279,13 +279,13 @@
 				$sIcon = 'info-circle';
 				break;
 			case 'warning':
-				$sIcon = 'warning';
+				$sIcon = 'exclamation-triangle';
 				break;
 			case 'scoop':
 				$sIcon = 'bullhorn';
 				break;
 			case 'tip':
-				$sIcon = 'lightbulb-o';
+				$sIcon = 'lightbulb';
 				break;
 			default:
 				$sIcon = '';
