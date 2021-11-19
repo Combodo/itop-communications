@@ -1,14 +1,17 @@
 <?php
-/**
- * Localized data
+ /**
+ * Spanish Localized data
  *
- * @copyright   Copyright (C) 2016 COMBODO SARL
+ * @copyright   Copyright (C) 2010-2021 Combodo SARL
  * @license     http://opensource.org/licenses/AGPL-3.0
+ * @traductor   Miguel Turrubiates <miguel_tf@yahoo.com> 
+ * @notas       Utilizar codificación UTF-8 para mostrar acentos y otros caracteres especiales 
  */
+
 //
 // Class: Communication
 //
-Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:Communication' => 'Comunicación',
 	'Class:Communication+' => '',
 	'Class:Communication/Attribute:ref' => 'Ref',
@@ -62,7 +65,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
 // Class: lnkCommunicationToOrganization
 //
 
-Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:lnkCommunicationToOrganization' => 'Relación Comunicación / Organización',
 	'Class:lnkCommunicationToOrganization+' => '',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id' => 'Organización',
@@ -76,7 +79,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
 ));
 
 
-Dict::Add('ES CR', 'Spanish', 'Español, Castellaño', array(
+Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Menu:Communication' => 'Comunicaciones',
 	'Menu:Communication+' => 'Todas las comunicaciones abiertas',
 	'Portal:Communications' => 'Communicaciones',
