@@ -27,9 +27,14 @@ ItopExtensionsExtraRoutes::AddRoutes(
     array()
 );
 
-/** @noinspection PhpUnhandledExceptionInspection */
-ItopExtensionsExtraRoutes::AddControllersClasses(
-    array(
-        'Combodo\iTop\Portal\Controller\CommunicationController'
-    )
-);
+/**
+ * @since 3.1.0
+ */
+if (function_exists('ItopExtensionsExtraRoutes::AddControllersClasses')) {
+    /** @noinspection PhpUnhandledExceptionInspection */
+    ItopExtensionsExtraRoutes::AddControllersClasses(
+        array(
+            'Combodo\iTop\Portal\Controller\CommunicationController'
+        )
+    );
+}
