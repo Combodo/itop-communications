@@ -45,6 +45,7 @@ SetupWebPage::AddModule(
 		//
 		'datamodel' => array(
 			// Explicitly load classes from DM
+			'src/Hook/CommunicationPageUIBlockExtension.php',
 			'model.itop-communications.php',
 			// Compatibility layer
 			'compatibilitybridge.php',
