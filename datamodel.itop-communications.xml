@@ -653,7 +653,7 @@ abstract class _Communication extends cmdbAbstractObject
 		MetaModel::Init_Params($aParams);
 		
 		$aAllTags = ContextTag::GetTags();
-		$aPortalTags = array();
+		$aPortalTags = array('Login' => 'Login');
 		foreach($aAllTags as $sTagKey => $sTagValue){
 			if(substr($sTagKey, 0, 4) === 'GUI:' || substr($sTagKey, 0, 7) === 'Portal:'){
 				$aPortalTags[$sTagKey] = $sTagValue;
@@ -669,7 +669,7 @@ abstract class _Communication extends cmdbAbstractObject
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */
-	public function IsAllowedPortalsValid()
+	public function IsAllowedPortalsValid($sPortalToCheck = null)
 	{
 		// Check the context
 		$oAllowedPortals = $this->Get('allowed_portals');
@@ -678,7 +678,7 @@ abstract class _Communication extends cmdbAbstractObject
 		foreach ($oAllowedPortals->GetValues() as $sValue)
 		{
 			$bChecked = true;
-			if (ContextTag::Check($sValue))
+			if (ContextTag::Check($sValue) || (isset($sPortalToCheck) && $sPortalToCheck === $sValue))
 			{
 				$bValid = true;
 				break;

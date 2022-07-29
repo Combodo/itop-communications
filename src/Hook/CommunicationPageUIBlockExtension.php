@@ -1,6 +1,8 @@
 <?php
 
 use Combodo\iTop\Application\UI\Base\Component\Alert\AlertUIBlockFactory;
+use Combodo\iTop\Application\UI\Base\Component\CollapsibleSection\CollapsibleSectionUIBlockFactory;
+use Combodo\iTop\Application\UI\Base\Component\CollapsibleSection\CommunicationCollapsibleSection;
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlockUIBlockFactory;
 
 if (interface_exists('iPageUIBlockExtension')) {
@@ -21,9 +23,17 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 
 	public function GetHeaderBlock()
 	{
-		$oMainBlock = UIContentBlockUIBlockFactory::MakeStandard();
+		$sExecModule = utils::ReadParam('exec_module', '');
+		// We don't want to display in itop-config modules, especially config editor
+		if($sExecModule === 'itop-config') {
+			return;
+		}
+
+		$oMainBlock = new CommunicationCollapsibleSection(Dict::S('Class:Communication'),[] ,  'com-wrapper-communications');
+		$oMainBlock->EnableSaveCollapsibleState(true)
+			->SetOpenedByDefault(true);
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
-		$oSearch = DBObjectSearch::FromOQL('SELECT Communication');
+		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
 		$oSearch->AllowAllData();
 		$oSet = new DBObjectSet($oSearch, array('start_date' => true), array('now' => $sNowSQL));
 		$iCount = 0;

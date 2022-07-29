@@ -1,0 +1,5 @@
+{% for aComm in aData %}
+    <div id="ibo-communication-{{ aComm.id }}" class="ibo-alert com-alert ibo-is-{{ aComm.color }} ibo-is-opened" data-role="ibo-alert">
+        <div class="ibo-alert--body"><span class="com-alert--body--title">{{ aComm.title }}</span> {{ aComm.message | raw }}</div>
+    </div>
+{% endfor %}
