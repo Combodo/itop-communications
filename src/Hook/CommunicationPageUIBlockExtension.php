@@ -39,6 +39,7 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 		$iCount = 0;
 		while ($oComm = $oSet->Fetch())
 		{
+			$iCount++;
 			$oComm->Reload(true /* allow all data */); // Make sure that all the fields are loaded
 			if ($oComm->IsUserInScope(UserRights::GetUserObject()) && $oComm->IsAllowedPortalsValid())
 			{
@@ -50,7 +51,12 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 				$oMainBlock->AddSubBlock($oAlertBlock);
 			}
 		}
-		return $oMainBlock;
+		if($iCount > 0){
+			return $oMainBlock;
+		}
+		else{
+			return;
+		}
 	}
 
 	public function GetFooterBlock()
