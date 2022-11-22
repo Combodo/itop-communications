@@ -72,6 +72,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:Communication/Attribute:org_match_type/Value:direct+' => '',
 	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Cascade to child organizations',
 	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '',
+    'Class:Communication/Attribute:org_match_type/Value:oql' => 'Organizations from OQL',
 	'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'End date must be greater than start date.',
 ));
 
