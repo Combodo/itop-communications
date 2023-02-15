@@ -271,7 +271,7 @@
     			// Target organizations are those directly linked to the communication
     			$bRet = in_array($iUserOrg, $aTargetOrgs);
 			}
-    		else { // ($sMatchType == 'cascade')
+    		else { // ($sMatchType === 'cascade')
     		    // Target organizations are those directly linked to the communication or one of their sub-organizations
         		$oOrgHierarchical = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
         		$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
