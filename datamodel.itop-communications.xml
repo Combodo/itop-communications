@@ -346,7 +346,10 @@
       }
     }]]></code>
         </method>
-        <method>
+        <method id="DisplayBareRelations">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
           <code><![CDATA[public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
     {
         parent::DisplayBareRelations($oPage, $bEditMode);
@@ -360,23 +363,23 @@
             );
             if ($sMatchType === 'oql') { // Result of OQL query regardless of user rights
                 $oSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
-                $aParams['panel_title'] = utils::HtmlEntities(Dict::S('Class:Communication/Attribute:org_match_type/Value:oql+'));
+                $aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:oql+');
             } elseif (count($this->Get('organizations_list')) == 0) { // All organizations visible to the current user
         		$oSearch = DBSearch::FromOQL('SELECT Organization');
-        		$aParams['panel_title'] = utils::HtmlEntities(Dict::S('Class:Communication/Tab:PreviewAll'));
+        		$aParams['panel_title'] =Dict::S('Class:Communication/Tab:PreviewAll');
             } elseif ($sMatchType === 'direct') { // All Target organizations regardless of user rights
         		$oSearch = DBSearch::FromOQL_AllData('SELECT Organization AS O JOIN lnkCommunicationToOrganization AS L ON L.org_id=O.id WHERE L.communication_id = '.$iKey);
-        		$aParams['panel_title'] = utils::HtmlEntities(Dict::S('Class:Communication/Attribute:org_match_type/Value:direct+'));
+        		$aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:direct+');
             } elseif ($sMatchType === 'cascade') {  // All Target organizations and any organization below regardless of user rights
         		$oSearch = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (SELECT Organization AS O JOIN lnkCommunicationToOrganization AS L ON L.org_id=O.id WHERE L.communication_id = '.$iKey.')');
-        		$aParams['panel_title'] = utils::HtmlEntities(Dict::S('Class:Communication/Attribute:org_match_type/Value:cascade+'));
+        		$aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:cascade+');
             }
             $oSet = new DBObjectSet($oSearch);
             $oSet->SetShowObsoleteData(utils::ShowObsoleteData());
             $iCount = $oSet->CountWithLimit(100);
             $sCount = ($iCount == 100) ? '99+': $iCount;
             $oPage->SetCurrentTab(Dict::S('Class:Communication/Tab:Preview').' ('.$sCount.')');
-            $oBlock = new DisplayBlock($oSearch, 'list', true, $aParams);
+            $oBlock = new DisplayBlock($oSearch, 'list', true);
             $oBlock->Display($oPage, 'communication_preview_'.$iKey, $aParams);
         }
     }
