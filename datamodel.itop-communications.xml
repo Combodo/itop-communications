@@ -331,7 +331,7 @@
               try {
                   $oSearch = DBObjectSearch::FromOQL($sOql);
                   $sOqlClass = $oSearch->GetClass();
-                  if ($sOqlClass != 'Organization') {
+                  if ($sOqlClass !== 'Organization') {
                       $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:OQLMustReturnOrganization');
                   }
               } catch(Exception $e) {
