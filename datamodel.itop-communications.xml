@@ -267,7 +267,7 @@
 		        // Target organizations are "All organizations" when none are explicitly linked to the Communication
 			    $bRet = true;
 		    }
-		    elseif ($sMatchType == 'direct') {
+		    elseif ($sMatchType === 'direct') {
     			// Target organizations are those directly linked to the communication
     			$bRet = in_array($iUserOrg, $aTargetOrgs);
 			}
