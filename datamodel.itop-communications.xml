@@ -251,7 +251,7 @@
 		$sMatchType = $this->Get('org_match_type');
         $bRet = false;
 
-		if ($sMatchType == 'oql') {
+		if ($sMatchType === 'oql') {
 		    // Target organizations defined as an OQL
     		$oOrgSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
     		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array());
