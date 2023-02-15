@@ -324,7 +324,7 @@
           $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:EndDateMustBeGreaterThanStartDate');
       }
       $sOql = $this->Get('org_oql');
-      if ($this->Get('org_match_type') == 'oql') {
+      if ($this->Get('org_match_type') === 'oql') {
           if (empty($sOql)) {
               $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:OQLMustBeProvided');
           } else {
