@@ -1,0 +1,9 @@
+<div id="com-container">
+{% for aComm in aData %}
+    <div id="ibo-communication-{{ aComm.id }}" class="com-alert com-is-{{ aComm.severity }}">
+        <div class="ibo-alert--body"><span class="com-alert--body--title">{{ aComm.title }}</span>
+           </div>
+    </div>
+{% endfor %}
+</div>
+

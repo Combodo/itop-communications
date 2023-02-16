@@ -313,6 +313,37 @@
     }
         ]]></code>
         </method>
+        <method id="GetColorFromIcon">
+          <static>false</static>
+          <access>public</access>
+          <type>Custom</type>
+          <comment><![CDATA[/**
+	 * Override to change colors in backoffice
+	 * @return string
+	 */]]></comment>
+          <code><![CDATA[    public function GetColorFromIcon()
+    {
+		switch ($this->Get('icon'))
+		{
+			case 'information':
+				$sColor = Combodo\iTop\Application\UI\Base\Component\Alert\Alert::ENUM_COLOR_SCHEME_INFORMATION;
+				break;
+			case 'warning':
+				$sColor = Combodo\iTop\Application\UI\Base\Component\Alert\Alert::ENUM_COLOR_SCHEME_WARNING;
+				break;
+			case 'scoop':
+				$sColor = Combodo\iTop\Application\UI\Base\Component\Alert\Alert::ENUM_COLOR_SCHEME_NEUTRAL;
+				break;
+			case 'tip':
+				$sColor = Combodo\iTop\Application\UI\Base\Component\Alert\Alert::ENUM_COLOR_SCHEME_SUCCESS;
+				break;
+			default:
+				$sColor = Combodo\iTop\Application\UI\Base\Component\Alert\Alert::ENUM_COLOR_SCHEME_NEUTRAL;
+		}
+		return $sColor;
+    }
+        ]]></code>
+        </method>
         <method id="DoCheckToWrite">
           <static>false</static>
           <access>public</access>
@@ -386,6 +417,33 @@
             ]]>
           </code>
         </method>
+        <method id="IsAllowedPortalsValid">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[	public function IsAllowedPortalsValid($sPortalToCheck = null)
+	{
+		// Check the context
+		$oAllowedPortals = $this->Get('allowed_portals');
+		$bChecked = false;
+		$bValid = false;
+		foreach ($oAllowedPortals->GetValues() as $sValue)
+		{
+			$bChecked = true;
+			if (ContextTag::Check($sValue) || (isset($sPortalToCheck) && $sPortalToCheck === $sValue))
+			{
+				$bValid = true;
+				break;
+			}
+		}
+		if ($bChecked && !$bValid)
+		{
+			return false;
+		}
+		return true;
+	}
+]]></code>
+        </method>
       </methods>
       <presentation>
         <list>
@@ -453,6 +511,9 @@
                 </item>
                 <item id="org_oql" _delta="define">
                   <rank>80</rank>
+                </item>
+                <item id="allowed_portals">
+                  <rank>90</rank>
                 </item>
               </items>
               <rank>10</rank>
@@ -670,4 +731,35 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
       </bricks>
     </module_design>
   </module_designs>
+  <snippets>
+    <snippet id="_Communication" _delta="define">
+      <placement>module</placement>
+      <module>itop-communications</module>
+      <rank>2</rank>
+      <content>
+        <![CDATA[
+class _Communication extends cmdbAbstractObject
+{
+	/**
+	 * @throws \CoreException
+	 */
+	public static function Init()
+	{		
+	
+    // - Declare an attribute for class Communication in PHP as we need all declared portals in runtime
+		$aAllTags = ContextTag::GetTags();
+		$aPortalTags = array('Login' => 'Login');
+		foreach($aAllTags as $sTagKey => $sTagValue){
+			if(substr($sTagKey, 0, 4) === 'GUI:' || substr($sTagKey, 0, 7) === 'Portal:'){
+				$aPortalTags[$sTagKey] = $sTagValue;
+			}
+		}
+
+		MetaModel::Init_AddAttribute( new AttributeEnumSet("allowed_portals", array("allowed_values" => null, "possible_values" => new ValueSetEnumPadded($aPortalTags), "sql" => "allowed_portals", "depends_on" => array(), "is_null_allowed" => true, "max_items" => 12)), 'Communication');
+	}
+}
+        ]]>
+      </content>
+    </snippet>
+  </snippets>
 </itop_design>
