@@ -738,13 +738,26 @@ hf8TYACJcrs3FtGHUAAAAABJRU5ErkJggg==</data>
       <rank>2</rank>
       <content>
         <![CDATA[
-class _Communication extends cmdbAbstractObject
+abstract class _Communication extends cmdbAbstractObject
 {
 	/**
 	 * @throws \CoreException
 	 */
 	public static function Init()
-	{		
+	{	
+		$aParams = array
+		(
+			"category"            => "",
+			"key_type"            => "autoincrement",
+			"name_attcode"        => "",
+			"state_attcode"       => "",
+			"reconc_keys"         => array(),
+			"db_table"            => "_communication",
+			"db_key_field"        => "id",
+			"db_finalclass_field" => "realclass",
+		);
+		MetaModel::Init_Params($aParams);
+		
 	
     // - Declare an attribute for class Communication in PHP as we need all declared portals in runtime
 		$aAllTags = ContextTag::GetTags();
