@@ -101,10 +101,19 @@
           <values>
             <value id="direct">direct</value>
             <value id="cascade">cascade</value>
+            <value id="oql">oql</value>
           </values>
           <default_value>cascade</default_value>
           <is_null_allowed>false</is_null_allowed>
           <display_style>list</display_style>
+        </field>
+        <field id="org_oql" xsi:type="AttributeOQL">
+          <sql>org_oql</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+          <width/>
+          <height/>
+          <tracking_level>all</tracking_level>
         </field>
       </fields>
       <lifecycle>
@@ -170,6 +179,9 @@
               <attribute id="org_match_type">
                 <read_only/>
               </attribute>
+              <attribute id="org_oql">
+                <read_only/>
+              </attribute>
             </flags>
             <transitions>
               <transition id="ev_reopen">
@@ -232,33 +244,40 @@
 	 */]]></comment>
           <code><![CDATA[    public function IsUserInScope(User $oUser)
     {
-		$oOrgSearch = DBSearch::FromOQL_AllData('SELECT lnkCommunicationToOrganization WHERE communication_id = :communication_id');
-		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array('communication_id' => $this->GetKey()));
-		$aTargetOrgs = $oOrgSet->GetColumnAsArray('org_id');
-		if (count($aTargetOrgs) == 0)
-		{
-			$bRet = true;
-		}
-		else
-		{
-			$iContact = $oUser->Get('contactid');
-			$oContact = MetaModel::GetObject('Contact', $iContact, true, true);
-			$iUserOrg = $oContact->Get('org_id');
+		// Is the user org within the target organizations
+		$iContact = $oUser->Get('contactid');
+		$oContact = MetaModel::GetObject('Contact', $iContact, true, true);
+		$iUserOrg = $oContact->Get('org_id');
+		$sMatchType = $this->Get('org_match_type');
+        $bRet = false;
 
-			$sMatchType = $this->Get('org_match_type');
-			if ($sMatchType == 'direct')
-			{
-				// Flat version
-				$bRet = in_array($iUserOrg, $aTargetOrgs);
-			}
-			else // 'cascade'
-			{
-				// Is the user org below or within any of the target organizations
-				$oOrgHierarchical = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
-				$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
-				$bRet = $oOrgHSet->Count() > 0;
-			}
+		if ($sMatchType === 'oql') {
+		    // Target organizations defined as an OQL
+    		$oOrgSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
+    		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array());
+    		$aTargetOrgs = $oOrgSet->GetColumnAsArray('id');
+		    $bRet = in_array($iUserOrg, $aTargetOrgs);
 		}
+		else {
+		    // Target organizations are those linked to the Communication
+			$oOrgSearch = DBSearch::FromOQL_AllData('SELECT lnkCommunicationToOrganization WHERE communication_id = :communication_id');
+		    $oOrgSet = new DBObjectSet($oOrgSearch, array(), array('communication_id' => $this->GetKey()));
+		    $aTargetOrgs = $oOrgSet->GetColumnAsArray('org_id');
+		    if (count($aTargetOrgs) == 0) {
+		        // Target organizations are "All organizations" when none are explicitly linked to the Communication
+			    $bRet = true;
+		    }
+		    elseif ($sMatchType === 'direct') {
+    			// Target organizations are those directly linked to the communication
+    			$bRet = in_array($iUserOrg, $aTargetOrgs);
+			}
+    		else { // ($sMatchType === 'cascade')
+    		    // Target organizations are those directly linked to the communication or one of their sub-organizations
+        		$oOrgHierarchical = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (:target_org_list) AND child.id = :contact_org_id');
+        		$oOrgHSet = new DBObjectSet($oOrgHierarchical, array(), array('contact_org_id' => $iUserOrg, 'target_org_list' => $aTargetOrgs));
+        		$bRet = $oOrgHSet->Count() > 0;
+    		}
+    	}
 		return $bRet;
     }
         ]]></code>
@@ -330,13 +349,73 @@
           <access>public</access>
           <type>Overload-DBObject</type>
           <code><![CDATA[public function DoCheckToWrite()
-  {
-    parent::DoCheckToWrite();
-    if ($this->Get('start_date') > $this->Get('end_date'))
     {
-      $this->m_aCheckIssues[] = Dict::Format('Class:Communication/Error:EndDateMustBeGreaterThanStartDate');
+      parent::DoCheckToWrite();
+      if ($this->Get('start_date') > $this->Get('end_date')) {
+          $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:EndDateMustBeGreaterThanStartDate');
+      }
+      $sOql = $this->Get('org_oql');
+      if ($this->Get('org_match_type') === 'oql') {
+          if (empty($sOql)) {
+              $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:OQLMustBeProvided');
+          } else {
+              try {
+                  $oSearch = DBObjectSearch::FromOQL($sOql);
+                  $sOqlClass = $oSearch->GetClass();
+                  if ($sOqlClass !== 'Organization') {
+                      $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:OQLMustReturnOrganization');
+                  }
+              } catch(Exception $e) {
+                  $this->m_aCheckIssues[] = Dict::Format('Class:Communication/Error:OQLNotValid', $e->getMessage());
+              }
+          }
+      } elseif (!empty($sOql)) {
+          $this->m_aCheckWarnings[] = Dict::S('Class:Communication/Warning:OQLProvidedButUnused');
+          if (count($this->Get('organizations_list'))<1) {
+              $this->m_aCheckWarnings[] = Dict::S('Class:Communication/Warning:NoOrgSoAll');
+          }
+      }
+    }]]></code>
+        </method>
+        <method id="DisplayBareRelations">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
+    {
+        parent::DisplayBareRelations($oPage, $bEditMode);
+        $sMatchType = $this->Get('org_match_type');
+        if (!$bEditMode) {
+            $iKey = $this->GetKey();
+            $aParams = array(
+                'menu' => true,
+                'table_id' => 'communication_preview_orgs_'.$iKey,
+                'panel_icon' => MetaModel::GetClassIcon('Organization', false)
+            );
+            if ($sMatchType === 'oql') { // Result of OQL query regardless of user rights
+                $oSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
+                $aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:oql+');
+            } elseif (count($this->Get('organizations_list')) == 0) { // All organizations visible to the current user
+        		$oSearch = DBSearch::FromOQL('SELECT Organization');
+        		$aParams['panel_title'] =Dict::S('Class:Communication/Tab:PreviewAll');
+            } elseif ($sMatchType === 'direct') { // All Target organizations regardless of user rights
+        		$oSearch = DBSearch::FromOQL_AllData('SELECT Organization AS O JOIN lnkCommunicationToOrganization AS L ON L.org_id=O.id WHERE L.communication_id = '.$iKey);
+        		$aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:direct+');
+            } elseif ($sMatchType === 'cascade') {  // All Target organizations and any organization below regardless of user rights
+        		$oSearch = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (SELECT Organization AS O JOIN lnkCommunicationToOrganization AS L ON L.org_id=O.id WHERE L.communication_id = '.$iKey.')');
+        		$aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:cascade+');
+            }
+            $oSet = new DBObjectSet($oSearch);
+            $oSet->SetShowObsoleteData(utils::ShowObsoleteData());
+            $iCount = $oSet->CountWithLimit(100);
+            $sCount = ($iCount == 100) ? '99+': $iCount;
+            $oPage->SetCurrentTab(Dict::S('Class:Communication/Tab:Preview').' ('.$sCount.')');
+            $oBlock = new DisplayBlock($oSearch, 'list', true);
+            $oBlock->Display($oPage, 'communication_preview_'.$iKey, $aParams);
+        }
     }
-  }]]></code>
+            ]]>
+          </code>
         </method>
         <method id="IsAllowedPortalsValid">
           <static>false</static>
@@ -430,8 +509,11 @@
                 <item id="org_match_type">
                   <rank>70</rank>
                 </item>
+                <item id="org_oql" _delta="define">
+                  <rank>80</rank>
+                </item>
                 <item id="allowed_portals">
-                <rank>80</rank>
+                  <rank>90</rank>
                 </item>
               </items>
               <rank>10</rank>

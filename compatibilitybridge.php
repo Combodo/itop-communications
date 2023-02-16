@@ -24,11 +24,13 @@
 // iTop 2.7 and newer
 if(file_exists(APPROOT . 'env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/vendor/autoload.php'))
 {
-	// Explicitly load classes for APIs
-	require_once __DIR__ . '/src/BackgroundProcess/AutoCloseCommunication.php';
-	require_once __DIR__ . '/src/Hook/CommunicationBrickPortalUIExtension.php';
-	// Autoloader for module classes
-	require_once __DIR__ . '/vendor/autoload.php';
+    // Explicitly load classes for APIs
+    require_once __DIR__ . '/src/BackgroundProcess/AutoCloseCommunication.php';
+    require_once __DIR__ . '/src/Hook/CommunicationBrickPortalUIExtension.php';
+    // Autoloader for module classes
+    require_once __DIR__ . '/vendor/autoload.php';
+    // Must be explicitly loaded to register its routes
+    require_once __DIR__ . '/src/Router/CommunicationBrickRouter.php';
 }
 // iTop 2.6 and older
 else
