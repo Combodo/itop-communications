@@ -30,32 +30,30 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 		}
 
 		$oMainBlock = new CommunicationCollapsibleSection(Dict::S('Class:Communication'),[] ,  'com-wrapper-communications');
-		$oMainBlock->EnableSaveCollapsibleState(true)
-			->SetOpenedByDefault(true);
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
 		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
 		$oSearch->AllowAllData();
 		$oSet = new DBObjectSet($oSearch, array('start_date' => true), array('now' => $sNowSQL));
 		$iCount = 0;
+		$bOpenedByDefault = false;
 		while ($oComm = $oSet->Fetch())
 		{
-			$iCount++;
 			$oComm->Reload(true /* allow all data */); // Make sure that all the fields are loaded
 			if ($oComm->IsUserInScope(UserRights::GetUserObject()) && $oComm->IsAllowedPortalsValid())
 			{
+				$iCount++;
 				$sTitle = $oComm->Get('title');
 				$sContent = $oComm->Get('message');
 				$oAlertBlock = AlertUIBlockFactory::MakeForInformation($sTitle, $sContent, 'ibo-communication-'.$oComm->GetKey())
 					->EnableSaveCollapsibleState('ibo-communication-'.$oComm->GetKey())
 					->SetColor($oComm->GetColorFromIcon());
+				$bOpenedByDefault = $bOpenedByDefault || appUserPreferences::GetPref('UI-Collapsible__ibo-communication-'.$oComm->GetKey(), "true") === "true";
 				$oMainBlock->AddSubBlock($oAlertBlock);
 			}
 		}
 		if($iCount > 0){
+			$oMainBlock->SetOpenedByDefault($bOpenedByDefault);
 			return $oMainBlock;
-		}
-		else{
-			return;
 		}
 	}
 
