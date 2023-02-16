@@ -5,11 +5,11 @@
  *
  */
 
+
 use iLoginUIExtension;
 use LoginBlockExtension;
 use LoginTwigContext;
 use utils;
-use MetaModel;
 
 /**
  * Class CommunicationLoginUiExtension
@@ -44,7 +44,7 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 				$aComm['id'] = $oComm->GetKey();
 				$aComm['title'] = $oComm->Get('title');
 				$aComm['message'] = $oComm->Get('message');
-				$aComm['color'] = $oComm->GetColorFromIcon();
+				$aComm['severity'] = $oComm->Get('icon');
 				$aData[] = $aComm;
 			}
 		}
