@@ -6,11 +6,6 @@
  */
 
 
-use iLoginUIExtension;
-use LoginBlockExtension;
-use LoginTwigContext;
-use utils;
-
 /**
  * Class CommunicationLoginUiExtension
  */
