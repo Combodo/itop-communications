@@ -1,0 +1,24 @@
+$('[data-role="com-alert"]').each(function(){
+    let oAlert = $(this);
+    oAlert.on('click', function() {
+        let oAlertMessage = $('#' + oAlert.prop('id') + '--message');
+        if (oAlertMessage.hasClass('com-dialog--content')) {
+            oAlertMessage.dialog('open');
+        } else {
+            oAlertMessage.dialog({
+                classes: {
+                  "ui-dialog": 'com-dialog',  
+                  "ui-dialog-content": 'com-dialog--content',  
+                },
+                title: oAlert.attr('data-title'),
+                modal: true,
+                width: 'auto',
+                maxHeight: window.innerHeight * 0.8,
+                create: function() {
+                    // - Hack as width: auto and maxWidth doesn't work together in the constructor
+                    $(this).css("maxWidth", window.innerWidth * 0.8 + "px");
+                },
+            });
+        }
+   }) 
+});

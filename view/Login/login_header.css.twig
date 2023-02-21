@@ -7,6 +7,9 @@
     right: 12px;
     max-width: 35%;
 }
+.com-alert .com-alert--body--message{
+    display: none;
+}
 .com-alert{
     position: relative;
     display: flex;
@@ -20,6 +23,8 @@
     min-height: 42px;
     border-radius: 5px;
     padding: 3px 44px 3px 10px;
+    
+    cursor: pointer;
 }
 .com-alert .ibo-alert--body > *{
     display: inline;
@@ -62,4 +67,8 @@
 .com-alert.com-is-scoop::after{
     content: '\f0a1';
     background-color: var(--ibo-color-green-400);
+}
+
+.com-dialog .ui-dialog-titlebar-close{
+    box-sizing: border-box;
 }

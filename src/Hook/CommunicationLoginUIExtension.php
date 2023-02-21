@@ -47,6 +47,7 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 		$oLoginContext->SetLoaderPath(utils::GetAbsoluteModulePath('itop-communications').'view/Login');
 		$oLoginContext->AddBlockExtension('login_header', new LoginBlockExtension('login_header.html.twig', $aData));
 		$oLoginContext->AddBlockExtension('css', new LoginBlockExtension('login_header.css.twig'));
+		$oLoginContext->AddBlockExtension('ready_script', new LoginBlockExtension('login_header.js.twig'));
 		return $oLoginContext;
 	}
 }
