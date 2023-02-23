@@ -1,5 +1,7 @@
 <?php
 
+namespace Combodo\iTop\Extension\Communications\Test\UnitTest;
+
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
 
 class AllowedPortalsTest extends ItopDataTestCase {
