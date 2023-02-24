@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AutoCloseCommunication' => $baseDir . '/src/BackgroundProcess/AutoCloseCommunication.php',
     'Combodo\\iTop\\Portal\\Brick\\CommunicationBrick' => $baseDir . '/src/Brick/CommunicationBrick.php',
-    'Combodo\\iTop\\Portal\\Controller\\CommunicationController' => $baseDir . '/src/Controller/CommunicationBrickController.php',
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );

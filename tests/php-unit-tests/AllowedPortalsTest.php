@@ -3,6 +3,8 @@
 namespace Combodo\iTop\Extension\Communications\Test\UnitTest;
 
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
+use Communication;
+use ContextTag;
 
 class AllowedPortalsTest extends ItopDataTestCase {
 
