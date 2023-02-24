@@ -31,7 +31,7 @@ use UserRights;
  *
  * @package Combodo\iTop\Portal\Controller
  */
-class CommunicationController extends BrickController
+class CommunicationBrickController extends BrickController
 {
 	/**
 	 * @param \Symfony\Component\HttpFoundation\Request $oRequest
