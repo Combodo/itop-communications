@@ -82,4 +82,5 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Portal:Communications' => 'Mitteilungen',
 	'Portal:Communication:Previous' => 'Vorherige',
 	'Portal:Communication:Next' => 'Nächste',
+	'itop-communications:Communications:Section:Title'=> 'Mitteilungen',
 ));

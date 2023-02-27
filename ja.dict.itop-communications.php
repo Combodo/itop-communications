@@ -97,4 +97,5 @@ Dict::Add('JA JP', 'Japanese', '日本語', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 ));
