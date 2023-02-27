@@ -46,7 +46,8 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 				$sContent = $oComm->Get('message');
 				$oAlertBlock = AlertUIBlockFactory::MakeForInformation($sTitle, $sContent, 'ibo-communication-'.$oComm->GetKey())
 					->EnableSaveCollapsibleState('ibo-communication-'.$oComm->GetKey())
-					->SetColor($oComm->GetColorFromIcon());
+					->SetColor($oComm->GetColorFromIcon())
+					->SetIsClosable(false);
 				$bOpenedByDefault = $bOpenedByDefault || appUserPreferences::GetPref('UI-Collapsible__ibo-communication-'.$oComm->GetKey(), "true") === "true";
 				$oMainBlock->AddSubBlock($oAlertBlock);
 			}
