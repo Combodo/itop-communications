@@ -33,6 +33,7 @@ class CommunicationCollapsibleSection extends CollapsibleSection
 	// Overloaded constants
 	public const DEFAULT_HTML_TEMPLATE_REL_PATH = 'itop-communications/view/CommunicationCollapisbleSection/layout';
 	public const DEFAULT_CSS_TEMPLATE_REL_PATH = 'itop-communications/view/CommunicationCollapisbleSection/layout';
+	public const DEFAULT_JS_ON_READY_TEMPLATE_REL_PATH = 'itop-communications/view/CommunicationCollapisbleSection/layout';
+	
 	public const REQUIRES_ANCESTORS_DEFAULT_JS_FILES = 'true';
-
 }
