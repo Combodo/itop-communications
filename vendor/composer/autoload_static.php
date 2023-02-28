@@ -21,9 +21,9 @@ class ComposerStaticInitbf40c722a36f78c1d7aa3f49e1350d02
     );
 
     public static $classMap = array (
-        'AutoCloseCommunication' => __DIR__ . '/../..' . '/src/BackgroundProcess/AutoCloseCommunication.php',
         'Combodo\\iTop\\Portal\\Brick\\CommunicationBrick' => __DIR__ . '/../..' . '/src/Brick/CommunicationBrick.php',
-        'Combodo\\iTop\\Portal\\Controller\\CommunicationController' => __DIR__ . '/../..' . '/src/Controller/CommunicationBrickController.php',
+        'Combodo\\iTop\\Portal\\Controller\\CommunicationBrickController' => __DIR__ . '/../..' . '/src/Controller/CommunicationBrickController.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

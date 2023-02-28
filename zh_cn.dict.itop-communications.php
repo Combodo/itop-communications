@@ -97,4 +97,5 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 ));

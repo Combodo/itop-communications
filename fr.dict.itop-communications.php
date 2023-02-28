@@ -95,4 +95,5 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Portal:Communications' => 'Communications',
 	'Portal:Communication:Previous' => 'Précédent',
 	'Portal:Communication:Next' => 'Suivant',
+	'itop-communications:Communications:Section:Title'=> 'Communications',
 ));

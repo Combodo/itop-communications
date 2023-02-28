@@ -1,0 +1,9 @@
+
+$('#{{ oUIBlock.GetId() }}').collapsible_section({
+    bOpenedByDefault: {{ oUIBlock.IsOpenedByDefault()|var_export }}
+    {% if oUIBlock.IsSaveCollapsibleStateEnabled() %}, collapsibleStateStorageKey: '{{ oUIBlock.GetSessionCollapsibleStateStorageKey() }}'{% endif %}
+});
+
+$('#{{ oUIBlock.GetId() }}').find('[data-role="ibo-collapsible-section--collapse-toggler"] .ibo-collapsible-section--minimize-button').on('click', function (oEvent) {
+    $('#{{ oUIBlock.GetId() }}').find('[data-role="ibo-alert"].ibo-is-opened [data-role="ibo-alert--collapse-toggler"]').trigger('click');
+});

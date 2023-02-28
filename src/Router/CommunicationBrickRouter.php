@@ -38,7 +38,7 @@ if (version_compare(ITOP_DESIGN_LATEST_VERSION, 3.1, '>=')) {
     /** @noinspection PhpUnhandledExceptionInspection */
     ItopExtensionsExtraRoutes::AddControllersClasses(
         array(
-            'Combodo\iTop\Portal\Controller\CommunicationController'
+            'Combodo\iTop\Portal\Controller\CommunicationBrickController'
         )
     );
 }

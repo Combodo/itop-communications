@@ -35,7 +35,7 @@ class CommunicationBrick extends PortalBrick
 	const DEFAULT_HEIGHT = "15";
 	const DEFAULT_VISIBLE_NAVIGATION_MENU = false;
 	const DEFAULT_TILE_TEMPLATE_PATH = 'itop-communications/view/tile.html.twig';
-	const DEFAULT_TILE_CONTROLLER_ACTION = 'Combodo\\iTop\\Portal\\Controller\\CommunicationController::RenderTileAction';
+	const DEFAULT_TILE_CONTROLLER_ACTION = 'Combodo\\iTop\\Portal\\Controller\\CommunicationBrickController::RenderTileAction';
 
 	protected $sOql;
 	protected $iHeightEm;

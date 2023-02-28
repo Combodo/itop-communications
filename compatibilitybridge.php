@@ -27,6 +27,9 @@ if(file_exists(APPROOT . 'env-' . utils::GetCurrentEnvironment() . '/itop-portal
     // Explicitly load classes for APIs
     require_once __DIR__ . '/src/BackgroundProcess/AutoCloseCommunication.php';
     require_once __DIR__ . '/src/Hook/CommunicationBrickPortalUIExtension.php';
+	require_once __DIR__ . '/src/Hook/CommunicationPageUIBlockExtension.php';
+	require_once __DIR__ . '/src/Hook/CommunicationLoginUIExtension.php';
+	require_once __DIR__ . '/src/Controller/CommunicationCollapsibleSection.php';
     // Autoloader for module classes
     require_once __DIR__ . '/vendor/autoload.php';
     // Must be explicitly loaded to register its routes

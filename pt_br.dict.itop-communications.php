@@ -97,4 +97,5 @@ Dict::Add('PT BR', 'Brazilian', 'Brazilian', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 ));

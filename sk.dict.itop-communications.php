@@ -97,4 +97,5 @@ Dict::Add('SK SK', 'Slovak', 'Slovenčina', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 ));

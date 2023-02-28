@@ -97,4 +97,5 @@ Dict::Add('TR TR', 'Turkish', 'Türkçe', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 ));

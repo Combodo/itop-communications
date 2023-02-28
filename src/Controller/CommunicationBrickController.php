@@ -31,7 +31,7 @@ use UserRights;
  *
  * @package Combodo\iTop\Portal\Controller
  */
-class CommunicationController extends BrickController
+class CommunicationBrickController extends BrickController
 {
 	/**
 	 * @param \Symfony\Component\HttpFoundation\Request $oRequest
@@ -64,7 +64,7 @@ class CommunicationController extends BrickController
 		while ($oComm = $oSet->Fetch())
 		{
 			$oComm->Reload(true /* allow all data */); // Make sure that all the fields are loaded
-			if ($oComm->IsUserInScope(UserRights::GetUserObject()))
+			if ($oComm->IsUserInScope(UserRights::GetUserObject()) && $oComm->IsAllowedPortalsValid())
 			{
 				$aData['messages'][] = $oComm;
 				$iCount++;
