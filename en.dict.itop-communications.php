@@ -95,6 +95,7 @@ Set it if "Target organizations" specifies to use the OQL',
 Dict::Add('EN US', 'English', 'English', array(
 	'Class:lnkCommunicationToOrganization' => 'Link Communication / Organization',
 	'Class:lnkCommunicationToOrganization+' => '',
+    'Class:lnkCommunicationToOrganization/Name' => '%1$s / %2$s',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id' => 'Organization',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id+' => '',
 	'Class:lnkCommunicationToOrganization/Attribute:org_name' => 'Organization name',

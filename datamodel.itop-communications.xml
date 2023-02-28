@@ -491,8 +491,8 @@
         <db_final_class_field/>
         <naming>
           <attributes>
-            <attribute id="communication_id"/>
-            <attribute id="org_id"/>
+            <attribute id="communication_ref"/>
+            <attribute id="org_name"/>
           </attributes>
         </naming>
         <display_template/>
@@ -503,6 +503,17 @@
             <attribute id="org_id"/>
           </attributes>
         </reconciliation>
+        <uniqueness_rules>
+          <rule id="no_duplicate">
+            <attributes>
+              <attribute id="org_id"/>
+              <attribute id="communication_id"/>
+            </attributes>
+            <filter><![CDATA[]]></filter>
+            <disabled>false</disabled>
+            <is_blocking>true</is_blocking>
+          </rule>
+        </uniqueness_rules>
       </properties>
       <fields>
         <field id="org_id" xsi:type="AttributeExternalKey">
