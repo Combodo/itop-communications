@@ -444,6 +444,18 @@
 	}
 ]]></code>
         </method>
+        <method id="PrefillCreationForm">
+          <static>false</static>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+    public function PrefillCreationForm(&$aContextParam)
+    {
+      $this->Set('allowed_portals', 'GUI:Portal');
+  
+      parent::PrefillCreationForm($aContextParam);
+    }
+            ]]></code>
+        </method>
       </methods>
       <presentation>
         <list>
