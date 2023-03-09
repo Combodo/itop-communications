@@ -60,7 +60,9 @@ Dict::Add('FR FR', 'French', 'Français', array(
     'Class:Communication/Attribute:org_oql' => 'OQL',
     'Class:Communication/Attribute:org_oql+' => 'Cette OQL doit retourner uniquement des Organisations.
 A ne spécifier que si vous mettez "définies par OQL" dans le champ "Cibler les organisations..."',
-    'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'La date de fin doit être supérieure à la date de début',
+	'Class:Communication/Attribute:allowed_portals' => 'Portails autorisés',
+	'Class:Communication/Attribute:allowed_portals+' => '',
+	'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'La date de fin doit être supérieure à la date de début',
     'Class:Communication/Error:OQLMustBeProvided' => 'Un OQL doit être spécifié, puisque vous avez demandé à cibler les organisations... définies par OQL',
     'Class:Communication/Error:OQLMustReturnOrganization' => 'L\'OQL doit retourner des Organisations uniquement, ce n\'est pas ce qu\'il fait',
     'Class:Communication/Error:OQLNotValid' => 'La requête OQL n\'est pas valide : %1$s',

@@ -77,6 +77,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:Communication/Attribute:org_oql' => 'Organizations OQL',
     'Class:Communication/Attribute:org_oql+' => 'This OQL must return Organizations only. 
 Set it if "Target organizations" specifies to use the OQL',
+	'Class:Communication/Attribute:allowed_portals' => 'Allowed portals',
+	'Class:Communication/Attribute:allowed_portals+' => '',
 	'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'End date must be greater than start date.',
     'Class:Communication/Error:OQLMustBeProvided' => 'An OQL must be provided, as you requested the organizations to be retrieved by OQL',
     'Class:Communication/Error:OQLMustReturnOrganization' => 'The "Organizations OQL" query must return Organizations only',
