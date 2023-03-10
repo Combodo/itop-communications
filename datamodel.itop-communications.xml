@@ -450,7 +450,7 @@
           <code><![CDATA[
     public function PrefillCreationForm(&$aContextParam)
     {
-      $this->Set('allowed_portals', 'GUI:Portal');
+      $this->Set('allowed_portals', ContextTag::TAG_PORTAL);
   
       parent::PrefillCreationForm($aContextParam);
     }
