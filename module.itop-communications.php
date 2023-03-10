@@ -58,7 +58,7 @@ SetupWebPage::AddModule(
 		'data.sample' => array(
 			// add your sample data XML files here,
 		),
-		
+		'installer' => 'CommunicationsInstaller',
 		// Documentation
 		//
 		'doc.manual_setup' => '', // hyperlink to manual setup documentation, if any
@@ -71,3 +71,27 @@ SetupWebPage::AddModule(
 		),
 	)
 );
+
+class CommunicationsInstaller extends ModuleInstallerAPI
+{
+	/**
+	 * Handler called after the creation/update of the database schema
+	 * @param $oConfiguration Config The new configuration of the application
+	 * @param $sPreviousVersion string PRevious version number of the module (empty string in case of first install)
+	 * @param $sCurrentVersion string Current version number of the module
+	 */
+	public static function AfterDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
+	{
+		if (version_compare($sPreviousVersion, '1.3.0', '<'))
+		{
+			$oDBSearch = DBSearch::FromOQL('SELECT Communication WHERE allowed_portals=""');
+			$oDBObjectSet = new DBObjectSet($oDBSearch);
+			while($oCommunications = $oDBObjectSet->Fetch()){
+				$oCommunications->Set('allowed_portals', ContextTag::TAG_PORTAL);
+				$oCommunications->DBWrite();
+			}
+
+			SetupLog::Info("Updated Communications with default allowed portals.");
+		}
+	}
+}
