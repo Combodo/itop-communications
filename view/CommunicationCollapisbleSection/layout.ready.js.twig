@@ -4,6 +4,10 @@ $('#{{ oUIBlock.GetId() }}').collapsible_section({
     {% if oUIBlock.IsSaveCollapsibleStateEnabled() %}, collapsibleStateStorageKey: '{{ oUIBlock.GetSessionCollapsibleStateStorageKey() }}'{% endif %}
 });
 
-$('#{{ oUIBlock.GetId() }}').find('[data-role="ibo-collapsible-section--collapse-toggler"] .ibo-collapsible-section--minimize-button').on('click', function (oEvent) {
-    $('#{{ oUIBlock.GetId() }}').find('[data-role="ibo-alert"].ibo-is-opened [data-role="ibo-alert--collapse-toggler"]').trigger('click');
+/*
+ When collapsing Communications section, collapse all sub alerts
+ We specify :not(.ibo-is-opened) even if we aim opened section as their on.click() will collapse them before our on.click()
+ */
+$('body').on('click','#{{ oUIBlock.GetId() }}:not(.ibo-is-opened) [data-role="ibo-collapsible-section--collapse-toggler"]', function (oEvent) {
+    $('#{{ oUIBlock.GetId() }} [data-role="ibo-alert"].ibo-is-opened').find('[data-role="ibo-alert--collapse-toggler"]:first').trigger('click');
 });
