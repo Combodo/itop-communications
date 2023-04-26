@@ -111,6 +111,9 @@
           <sql>org_oql</sql>
           <default_value/>
           <is_null_allowed>true</is_null_allowed>
+          <dependencies>
+            <attribute id="org_match_type"/>
+          </dependencies>
           <width/>
           <height/>
           <tracking_level>all</tracking_level>
@@ -381,14 +384,15 @@
           <static>false</static>
           <access>public</access>
           <type>Overload-DBObject</type>
-          <code><![CDATA[public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
+          <code><![CDATA[
+            public function DisplayBareRelations(WebPage $oPage, $bEditMode = false)
     {
         parent::DisplayBareRelations($oPage, $bEditMode);
         $sMatchType = $this->Get('org_match_type');
         if (!$bEditMode) {
             $iKey = $this->GetKey();
             $aParams = array(
-                'menu' => true,
+                'menu' => false,
                 'table_id' => 'communication_preview_orgs_'.$iKey,
                 'panel_icon' => MetaModel::GetClassIcon('Organization', false)
             );
@@ -442,7 +446,24 @@
 		}
 		return true;
 	}
-]]></code>
+
+            ]]></code>
+        </method>
+        <method id="GetAttributeFlags">
+          <static>false</static>
+          <access>public</access>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+            	public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
+	{
+		if ( ($sAttCode === 'org_oql') && ($this->Get('org_oql') === "") && ($this->Get('org_match_type') !== 'oql'))
+		{
+			return OPT_ATT_READONLY;
+		}
+		return parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState);
+	}
+
+            ]]></code>
         </method>
         <method id="PrefillCreationForm">
           <static>false</static>
@@ -460,6 +481,9 @@
       <presentation>
         <list>
           <items>
+            <item id="title">
+              <rank>20</rank>
+            </item>
             <item id="org_id">
               <rank>20</rank>
             </item>
@@ -477,6 +501,28 @@
             </item>
           </items>
         </list>
+        <default_search>
+          <items>
+            <item id="ref">
+              <rank>10</rank>
+            </item>
+            <item id="title">
+              <rank>20</rank>
+            </item>
+            <item id="status">
+              <rank>30</rank>
+            </item>
+            <item id="start_date">
+              <rank>40</rank>
+            </item>
+            <item id="end_date">
+              <rank>50</rank>
+            </item>
+            <item id="org_id">
+              <rank>60</rank>
+            </item>
+          </items>
+        </default_search>
         <search>
           <items>
             <item id="ref">
@@ -503,46 +549,61 @@
           <items>
             <item id="col:col0">
               <items>
-                <item id="ref">
+                <item id="fieldset:Communication:when">
                   <rank>10</rank>
+                  <items>
+                    <item id="ref">
+                      <rank>10</rank>
+                    </item>
+                    <item id="org_id">
+                      <rank>20</rank>
+                    </item>
+                    <item id="status">
+                      <rank>30</rank>
+                    </item>
+                    <item id="start_date">
+                      <rank>50</rank>
+                    </item>
+                    <item id="end_date">
+                      <rank>60</rank>
+                    </item>
+                  </items>
                 </item>
-                <item id="org_id">
+                <item id="fieldset:Communication:to_whom">
                   <rank>20</rank>
-                </item>
-                <item id="status">
-                  <rank>30</rank>
-                </item>
-                <item id="start_date">
-                  <rank>50</rank>
-                </item>
-                <item id="end_date">
-                  <rank>60</rank>
-                </item>
-                <item id="org_match_type">
-                  <rank>70</rank>
-                </item>
-                <item id="org_oql" _delta="define">
-                  <rank>80</rank>
-                </item>
-                <item id="allowed_portals">
-                  <rank>90</rank>
+                  <items>
+                    <item id="org_match_type">
+                      <rank>70</rank>
+                    </item>
+                    <item id="org_oql" _delta="define">
+                      <rank>80</rank>
+                    </item>
+                    <item id="allowed_portals">
+                      <rank>90</rank>
+                    </item>
+                  </items>
                 </item>
               </items>
               <rank>10</rank>
             </item>
             <item id="col:col1">
               <items>
-                <item id="icon">
+                <item id="fieldset:Communication:what">
                   <rank>10</rank>
-                </item>
-                <item id="title">
+                  <items>
+                    <item id="icon">
+                      <rank>10</rank>
+                    </item>
+                    <item id="title">
+                      <rank>20</rank>
+                    </item>
+                    <item id="message">
+                      <rank>30</rank>
+                    </item>
+                  </items>
                   <rank>20</rank>
                 </item>
-                <item id="message">
-                  <rank>30</rank>
-                </item>
               </items>
-              <rank>20</rank>
             </item>
             <item id="organizations_list">
                 <rank>80</rank>
