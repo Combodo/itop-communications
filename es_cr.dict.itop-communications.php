@@ -1,5 +1,5 @@
 <?php
- /**
+/**
  * Spanish Localized data
  *
  * @copyright   Copyright (C) 2010-2021 Combodo SARL
@@ -7,7 +7,6 @@
  * @traductor   Miguel Turrubiates <miguel_tf@yahoo.com> 
  * @notas       Utilizar codificación UTF-8 para mostrar acentos y otros caracteres especiales 
  */
-
 //
 // Class: Communication
 //
@@ -58,7 +57,21 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:Communication/Attribute:org_match_type/Value:direct+' => '',
 	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Cascada a organizaciones asociadas',
 	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:oql' => 'Organizations from OQL~~',
+	'Class:Communication/Attribute:org_match_type/Value:oql+' => 'Organizations returned by the OQL query~~',
+	'Class:Communication/Attribute:org_oql' => 'OQL query~~',
+	'Class:Communication/Attribute:org_oql+' => 'This OQL must return Organizations only~~',
+	'Class:Communication/Attribute:allowed_portals' => 'Displayed on...~~',
+	'Class:Communication/Attribute:allowed_portals+' => 'User Interfaces in which this communication will be displayed~~',
 	'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'La fecha de fin debe ser mayor que la fecha de inicio.',
+	'Class:Communication/Error:OQLMustBeProvided' => 'An OQL must be provided, as you requested the organizations to be retrieved by OQL~~',
+	'Class:Communication/Error:OQLMustReturnOrganization' => 'The "Organizations OQL" query must return Organizations only~~',
+	'Class:Communication/Error:OQLNotValid' => 'The "Organizations OQL" query is invalid: %1$s~~',
+	'Class:Communication/Warning:OQLProvidedButUnused' => 'An "OQL query" was provided, but won\'t be used as "Target organizations..." is not set to "Organizations from OQL"~~',
+	'Class:Communication/Warning:NoOrgSoAll' => 'No Organizations selected, so the communication will be visible to all~~',
+	'Class:Communication/Tab:Preview' => 'Resultant organizations~~',
+	'Class:Communication/Tab:Preview+' => 'Organizations in scope of this communication~~',
+	'Class:Communication/Tab:PreviewAll' => 'All organizations are in scope of this communication~~',
 ));
 
 //
@@ -68,6 +81,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:lnkCommunicationToOrganization' => 'Relación Comunicación / Organización',
 	'Class:lnkCommunicationToOrganization+' => '',
+	'Class:lnkCommunicationToOrganization/Name' => '%1$s / %2$s~~',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id' => 'Organización',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id+' => '',
 	'Class:lnkCommunicationToOrganization/Attribute:org_name' => 'Nombre de la Organización',
@@ -85,5 +99,8 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Portal:Communications' => 'Communicaciones',
 	'Portal:Communication:Previous' => 'Previo',
 	'Portal:Communication:Next' => 'Siguiente',
-	'itop-communications:Communications:Section:Title'=> 'Comunicaciones',
+	'itop-communications:Communications:Section:Title' => 'Comunicaciones',
+	'Communication:when' => 'When~~',
+	'Communication:to_whom' => 'To whom and where~~',
+	'Communication:what' => 'What~~',
 ));

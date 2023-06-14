@@ -20,10 +20,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with iTop. If not, see <http://www.gnu.org/licenses/>
  */
+
 //
 // Class: Communication
 //
-Dict::Add('RU RU', 'Russian', 'Русский', array(
+
+Dict::Add('PL PL', 'Polish', 'Polski', array(
 	'Class:Communication' => 'Communication~~',
 	'Class:Communication+' => '~~',
 	'Class:Communication/Attribute:ref' => 'Ref~~',
@@ -33,7 +35,8 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 	'Class:Communication/Attribute:end_date' => 'End date~~',
 	'Class:Communication/Attribute:end_date+' => '~~',
 	'Class:Communication/Attribute:status' => 'Status~~',
-	'Class:Communication/Attribute:status+' => '~~',
+	'Class:Communication/Attribute:status+' => 'A background task will close it automatically when the end date is reached.
+If this is not the case, ask your system administrator to check if the cron.php is running~~',
 	'Class:Communication/Attribute:status/Value:ongoing' => 'Ongoing~~',
 	'Class:Communication/Attribute:status/Value:ongoing+' => '~~',
 	'Class:Communication/Attribute:status/Value:closed' => 'Closed~~',
@@ -42,9 +45,9 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 	'Class:Communication/Attribute:org_id+' => '~~',
 	'Class:Communication/Attribute:org_name' => 'Announcer name~~',
 	'Class:Communication/Attribute:org_name+' => '~~',
-	'Class:Communication/Attribute:icon' => 'Icon~~',
-	'Class:Communication/Attribute:icon+' => '~~',
-	'Class:Communication/Attribute:icon/Value:none' => 'None~~',
+	'Class:Communication/Attribute:icon' => 'Type~~',
+	'Class:Communication/Attribute:icon+' => 'This type will pilot the message background color in Console and optional icon in Portals~~',
+	'Class:Communication/Attribute:icon/Value:none' => 'Neutral~~',
 	'Class:Communication/Attribute:icon/Value:none+' => '~~',
 	'Class:Communication/Attribute:icon/Value:information' => 'Information~~',
 	'Class:Communication/Attribute:icon/Value:information+' => '~~',
@@ -62,14 +65,17 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 	'Class:Communication/Stimulus:ev_close+' => '~~',
 	'Class:Communication/Stimulus:ev_reopen' => 'Reopen this communication~~',
 	'Class:Communication/Stimulus:ev_reopen+' => '~~',
-	'Class:Communication/Attribute:organizations_list' => 'Target organizations~~',
-	'Class:Communication/Attribute:organizations_list+' => 'If no organization is selected, the communication will be displayed to everybody.~~',
+	'Class:Communication/Attribute:organizations_list' => 'Chosen organizations~~',
+	'Class:Communication/Attribute:organizations_list+' => 'Useless if organizations are defined by OQL~~',
 	'Class:Communication/Attribute:org_match_type' => 'Target organizations...~~',
-	'Class:Communication/Attribute:org_match_type+' => '~~',
-	'Class:Communication/Attribute:org_match_type/Value:direct' => 'Only the selected ones~~',
-	'Class:Communication/Attribute:org_match_type/Value:direct+' => '~~',
-	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Cascade to child organizations~~',
-	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '~~',
+	'Class:Communication/Attribute:org_match_type+' => 'There are 3 ways of defining who will see this communication:
+- Static list of chosen organizations,
+- Chosen organizations as well as any of their sub-organizations in cascade,	
+- Organizations returned by the OQL query below.~~',
+	'Class:Communication/Attribute:org_match_type/Value:direct' => 'Only the chosen ones~~',
+	'Class:Communication/Attribute:org_match_type/Value:direct+' => 'Static list of chosen organizations~~',
+	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Chosen and descendants~~',
+	'Class:Communication/Attribute:org_match_type/Value:cascade+' => 'Chosen organizations as well as any of their sub-organizations in cascade~~',
 	'Class:Communication/Attribute:org_match_type/Value:oql' => 'Organizations from OQL~~',
 	'Class:Communication/Attribute:org_match_type/Value:oql+' => 'Organizations returned by the OQL query~~',
 	'Class:Communication/Attribute:org_oql' => 'OQL query~~',
@@ -91,7 +97,7 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 // Class: lnkCommunicationToOrganization
 //
 
-Dict::Add('RU RU', 'Russian', 'Русский', array(
+Dict::Add('PL PL', 'Polish', 'Polski', array(
 	'Class:lnkCommunicationToOrganization' => 'Link Communication / Organization~~',
 	'Class:lnkCommunicationToOrganization+' => '~~',
 	'Class:lnkCommunicationToOrganization/Name' => '%1$s / %2$s~~',
@@ -106,13 +112,13 @@ Dict::Add('RU RU', 'Russian', 'Русский', array(
 ));
 
 
-Dict::Add('RU RU', 'Russian', 'Русский', array(
+Dict::Add('PL PL', 'Polish', 'Polski', array(
 	'Menu:Communication' => 'Communications~~',
 	'Menu:Communication+' => 'All open Communications~~',
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
-	'itop-communications:Communications:Section:Title' => 'Communications~~',
+	'itop-communications:Communications:Section:Title'=> 'Communications~~',
 	'Communication:when' => 'When~~',
 	'Communication:to_whom' => 'To whom and where~~',
 	'Communication:what' => 'What~~',
