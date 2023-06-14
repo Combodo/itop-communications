@@ -20,11 +20,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with iTop. If not, see <http://www.gnu.org/licenses/>
  */
-
 //
 // Class: Communication
 //
-
 Dict::Add('PL PL', 'Polish', 'Polski', array(
 	'Class:Communication' => 'Communication~~',
 	'Class:Communication+' => '~~',
@@ -118,7 +116,7 @@ Dict::Add('PL PL', 'Polish', 'Polski', array(
 	'Portal:Communications' => 'Communications~~',
 	'Portal:Communication:Previous' => 'Previous~~',
 	'Portal:Communication:Next' => 'Next~~',
-	'itop-communications:Communications:Section:Title'=> 'Communications~~',
+	'itop-communications:Communications:Section:Title' => 'Communications~~',
 	'Communication:when' => 'When~~',
 	'Communication:to_whom' => 'To whom and where~~',
 	'Communication:what' => 'What~~',
