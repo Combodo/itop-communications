@@ -255,11 +255,15 @@
         $bRet = false;
 
 		if ($sMatchType === 'oql') {
-		    // Target organizations defined as an OQL
-    		$oOrgSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
-    		$oOrgSet = new DBObjectSet($oOrgSearch, array(), array());
-    		$aTargetOrgs = $oOrgSet->GetColumnAsArray('id');
-		    $bRet = in_array($iUserOrg, $aTargetOrgs);
+            try {
+                 // Target organizations defined as an OQL
+                $oOrgSearch = DBSearch::FromOQL_AllData($this->Get('org_oql'));
+                $oOrgSet = new DBObjectSet($oOrgSearch, array(), $this->ToArgs('this'));
+                $aTargetOrgs = $oOrgSet->GetColumnAsArray('id');
+                $bRet = in_array($iUserOrg, $aTargetOrgs);
+            }  catch(Exception $e) {
+                IssueLog::Error( "Communication:".$this->GetKey()." | ".Dict::Format('Class:Communication/Error:OQLNotValid', $e->getMessage()));
+            }
 		}
 		else {
 		    // Target organizations are those linked to the Communication
@@ -368,6 +372,8 @@
                   if ($sOqlClass !== 'Organization') {
                       $this->m_aCheckIssues[] = Dict::S('Class:Communication/Error:OQLMustReturnOrganization');
                   }
+                  $oSet = new DBObjectSet($oSearch, [], $this->ToArgs('this'));
+                  $oSet->CountWithLimit(10);
               } catch(Exception $e) {
                   $this->m_aCheckIssues[] = Dict::Format('Class:Communication/Error:OQLNotValid', $e->getMessage());
               }
@@ -409,13 +415,19 @@
         		$oSearch = DBSearch::FromOQL_AllData('SELECT Organization AS child JOIN Organization AS root ON child.parent_id BELOW root.id WHERE root.id IN (SELECT Organization AS O JOIN lnkCommunicationToOrganization AS L ON L.org_id=O.id WHERE L.communication_id = '.$iKey.')');
         		$aParams['panel_title'] = Dict::S('Class:Communication/Attribute:org_match_type/Value:cascade+');
             }
-            $oSet = new DBObjectSet($oSearch);
-            $oSet->SetShowObsoleteData(utils::ShowObsoleteData());
-            $iCount = $oSet->CountWithLimit(100);
-            $sCount = ($iCount == 100) ? '99+': $iCount;
-            $oPage->SetCurrentTab(Dict::S('Class:Communication/Tab:Preview').' ('.$sCount.')');
-            $oBlock = new DisplayBlock($oSearch, 'list', true);
-            $oBlock->Display($oPage, 'communication_preview_'.$iKey, $aParams);
+            try {
+                $oSet = new DBObjectSet($oSearch, [], $this->ToArgs('this'));
+                $oSet->SetShowObsoleteData(utils::ShowObsoleteData());
+                $iCount = $oSet->CountWithLimit(100);
+                $sCount = ($iCount == 100) ? '99+': $iCount;
+                $oPage->SetCurrentTab(Dict::S('Class:Communication/Tab:Preview').' ('.$sCount.')');
+                $oBlock = new DisplayBlock($oSearch, 'list', true);
+                $aParams['this->id'] = $this->GetKey();
+                $aParams['this->class'] = get_class($this);
+                $oBlock->Display($oPage, 'communication_preview_'.$iKey, $aParams);
+            } catch(Exception $e) {
+                $this::SetSessionMessage(get_class($this), $this->GetKey(), 1, Dict::Format('Class:Communication/Error:OQLNotValid', $e->getMessage()), WebPage::ENUM_SESSION_MESSAGE_SEVERITY_ERROR, 1);
+            }
         }
     }
             ]]>
