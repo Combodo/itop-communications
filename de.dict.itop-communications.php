@@ -2,7 +2,7 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2017/18 ITOMIG GmbH
+ * @copyright   Copyright (C) 2023 ITOMIG GmbH
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 //
@@ -48,28 +48,31 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Class:Communication/Stimulus:ev_reopen' => 'Diese Mitteilung wiedereröffnen',
 	'Class:Communication/Stimulus:ev_reopen+' => '',
 	'Class:Communication/Attribute:organizations_list' => 'Ziel-Organisationen',
-	'Class:Communication/Attribute:organizations_list+' => 'Falls keine Ziel-Organisation ausgewählt wird, wird die Mitteilung allen angezeigt.',
+	'Class:Communication/Attribute:organizations_list+' => 'Die Einstellung wird ignoriert, falls Ziel-Organisationen über ein OQL ermittelt werden.',
 	'Class:Communication/Attribute:org_match_type' => 'Ziel-Organisationen...',
-	'Class:Communication/Attribute:org_match_type+' => '',
+	'Class:Communication/Attribute:org_match_type+' => 'Es sind 3 Wege möglich, um zu definieren, für welche Organisationen eine Mitteilung angzeigt wird:
+- Statische Liste an ausgewählten Organisationen,
+- Statische Liste an Organisationen inklusive aller Kind-Organisationen,	
+- Organisationen werden über eine OQL-Abfrage ermittelt.',
 	'Class:Communication/Attribute:org_match_type/Value:direct' => 'Nur die ausgewählten',
-	'Class:Communication/Attribute:org_match_type/Value:direct+' => '',
+	'Class:Communication/Attribute:org_match_type/Value:direct+' => 'Statische Liste an ausgewählten Organisationen',
 	'Class:Communication/Attribute:org_match_type/Value:cascade' => 'Zu Kind-Organisationen kaskadieren',
-	'Class:Communication/Attribute:org_match_type/Value:cascade+' => '',
-	'Class:Communication/Attribute:org_match_type/Value:oql' => 'Organizations from OQL~~',
-	'Class:Communication/Attribute:org_match_type/Value:oql+' => 'Organizations returned by the OQL query~~',
-	'Class:Communication/Attribute:org_oql' => 'OQL query~~',
-	'Class:Communication/Attribute:org_oql+' => 'This OQL must return Organizations only~~',
-	'Class:Communication/Attribute:allowed_portals' => 'Displayed on...~~',
-	'Class:Communication/Attribute:allowed_portals+' => 'User Interfaces in which this communication will be displayed~~',
+	'Class:Communication/Attribute:org_match_type/Value:cascade+' => 'Statische Liste an Organisationen inklusive aller Kind-Organisationen',
+	'Class:Communication/Attribute:org_match_type/Value:oql' => 'Organisationen einer OQL',
+	'Class:Communication/Attribute:org_match_type/Value:oql+' => 'Organisationen, die über die OQL-Abfrage ermittelt werden.',
+	'Class:Communication/Attribute:org_oql' => 'OQL-Abfrage',
+	'Class:Communication/Attribute:org_oql+' => 'Die OQL darf auschließlich Organisationen abfragen.',
+	'Class:Communication/Attribute:allowed_portals' => 'Anzeige im...',
+	'Class:Communication/Attribute:allowed_portals+' => 'User Interfaces in denen die Mitteilung angezeigt wird.',
 	'Class:Communication/Error:EndDateMustBeGreaterThanStartDate' => 'Endedatum mus nach Startdatum liegen.',
-	'Class:Communication/Error:OQLMustBeProvided' => 'An OQL must be provided, as you requested the organizations to be retrieved by OQL~~',
-	'Class:Communication/Error:OQLMustReturnOrganization' => 'The "Organizations OQL" query must return Organizations only~~',
-	'Class:Communication/Error:OQLNotValid' => 'The "Organizations OQL" query is invalid: %1$s~~',
-	'Class:Communication/Warning:OQLProvidedButUnused' => 'An "OQL query" was provided, but won\'t be used as "Target organizations..." is not set to "Organizations from OQL"~~',
-	'Class:Communication/Warning:NoOrgSoAll' => 'No Organizations selected, so the communication will be visible to all~~',
-	'Class:Communication/Tab:Preview' => 'Resultant organizations~~',
-	'Class:Communication/Tab:Preview+' => 'Organizations in scope of this communication~~',
-	'Class:Communication/Tab:PreviewAll' => 'All organizations are in scope of this communication~~',
+	'Class:Communication/Error:OQLMustBeProvided' => 'Es muss eine OQL-Abfrage definiert sein, um die Ziel-Organisationen über eine OQL zu ermitteln.',
+	'Class:Communication/Error:OQLMustReturnOrganization' => 'Die "Organisations-OQL" darf ausschließlich Organisationen zurückgeben.',
+	'Class:Communication/Error:OQLNotValid' => 'Die "Organisations-OQL-Abfrage" ist ungültig: %1$s',
+	'Class:Communication/Warning:OQLProvidedButUnused' => 'Es wurde eine "OQL-Abfrage" definiert, die jedoch nicht genutzt wird solange für "Ziel-Organisationen..." nicht "Organisation einer OQL" ausgewählt ist.',
+	'Class:Communication/Warning:NoOrgSoAll' => 'Es wurde keine Organisation ausgewählt, so dass die Mittelung für alle sichtbar ist.',
+	'Class:Communication/Tab:Preview' => 'Resultierende Organisationen',
+	'Class:Communication/Tab:Preview+' => 'Die von dieser Mitteilung betroffenen Organisationen',
+	'Class:Communication/Tab:PreviewAll' => 'Alle bestehenden Organisationen',
 ));
 
 //
@@ -79,7 +82,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Class:lnkCommunicationToOrganization' => 'Verknüpfung Miteilung / Organisation',
 	'Class:lnkCommunicationToOrganization+' => '',
-	'Class:lnkCommunicationToOrganization/Name' => '%1$s / %2$s~~',
+	'Class:lnkCommunicationToOrganization/Name' => '%1$s / %2$s',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id' => 'Organisation',
 	'Class:lnkCommunicationToOrganization/Attribute:org_id+' => '',
 	'Class:lnkCommunicationToOrganization/Attribute:org_name' => 'Name der Organisation',
@@ -98,7 +101,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Portal:Communication:Previous' => 'Vorherige',
 	'Portal:Communication:Next' => 'Nächste',
 	'itop-communications:Communications:Section:Title' => 'Mitteilungen',
-	'Communication:when' => 'When~~',
-	'Communication:to_whom' => 'To whom and where~~',
-	'Communication:what' => 'What~~',
+	'Communication:when' => 'Wenn',
+	'Communication:to_whom' => 'An wen und wo',
+	'Communication:what' => 'Was',
 ));
