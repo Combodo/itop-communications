@@ -249,8 +249,12 @@
     {
 		// Is the user org within the target organizations
 		$iContact = $oUser->Get('contactid');
-		$oContact = MetaModel::GetObject('Contact', $iContact, true, true);
-		$iUserOrg = $oContact->Get('org_id');
+		if ($iContact > 0) {
+          $oContact = MetaModel::GetObject('Contact', $iContact, true, true);
+          $iUserOrg = $oContact->Get('org_id');
+        } else {
+            $iUserOrg = 0;
+        }
 		$sMatchType = $this->Get('org_match_type');
         $bRet = false;
 
