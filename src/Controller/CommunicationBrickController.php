@@ -21,9 +21,11 @@
 namespace Combodo\iTop\Portal\Controller;
 
 use AttributeDateTime;
+use Combodo\iTop\Portal\Brick\BrickCollection;
 use DBObjectSearch;
 use DBObjectSet;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 use UserRights;
 
 /**
@@ -33,6 +35,14 @@ use UserRights;
  */
 class CommunicationBrickController extends BrickController
 {
+	/** @see N°6986 - Symfony 6.4 - Remove deprecated calls - communication */
+	private $oBrickCollection;
+	#[Required]
+	public function SetBrickCollection(BrickCollection $oBrickCollection): void
+	{
+		$this->oBrickCollection = $oBrickCollection;
+	}
+
 	/**
 	 * @param \Symfony\Component\HttpFoundation\Request $oRequest
 	 * @param                                           $sBrickId
@@ -47,7 +57,7 @@ class CommunicationBrickController extends BrickController
 	public function RenderTileAction(Request $oRequest, $sBrickId)
 	{
 		/** @var \Combodo\iTop\Portal\Brick\BrickCollection $oBrickCollection */
-		$oBrickCollection = $this->get('brick_collection');
+		$oBrickCollection = $this->oBrickCollection ?? $this->get('brick_collection');
 
 		/** @var \Combodo\iTop\Portal\Brick\CommunicationBrick $oBrick */
 		$oBrick = $oBrickCollection->GetBrickById($sBrickId);
