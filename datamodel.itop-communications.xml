@@ -111,9 +111,6 @@
           <sql>org_oql</sql>
           <default_value/>
           <is_null_allowed>true</is_null_allowed>
-          <dependencies>
-            <attribute id="org_match_type"/>
-          </dependencies>
           <width/>
           <height/>
           <tracking_level>all</tracking_level>
@@ -461,22 +458,6 @@
 			return false;
 		}
 		return true;
-	}
-
-            ]]></code>
-        </method>
-        <method id="GetAttributeFlags">
-          <static>false</static>
-          <access>public</access>
-          <type>Overload-DBObject</type>
-          <code><![CDATA[
-            	public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
-	{
-		if ( ($sAttCode === 'org_oql') && ($this->Get('org_oql') === "") && ($this->Get('org_match_type') !== 'oql'))
-		{
-			return OPT_ATT_READONLY;
-		}
-		return parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState);
 	}
 
             ]]></code>
