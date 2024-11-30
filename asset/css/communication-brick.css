@@ -76,6 +76,24 @@
 #brick-communication .has-no-type .tile_body {
 	padding-left: 0;
 }
+
+#brick-communication .carousel-inner .unfinish:before {
+	content: "\f141";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	font-size: 20px;
+	opacity: 0.3;
+	position: absolute;
+	clear: both;
+	top: 150px;
+	right:5%;
+}
+
+@media (min-width: 992px){
+	#brick-communication .carousel-inner .unfinish:before {
+		top: 140px;
+	}
+}
 @media (max-width: 767px) {
 	#brick-communication .tile_decoration {
 		display: block;
@@ -84,4 +102,8 @@
 		position: static;
 		margin-bottom: -2em;
 	}
+	#brick-communication .carousel-inner .unfinish:before{
+		top: 140px;
+	}
 }
+
