@@ -303,16 +303,16 @@
 		switch ($this->Get('icon'))
 		{
 			case 'information':
-				$sIcon = 'info-circle';
+				$sIcon = 'fas fa-info-circle';
 				break;
 			case 'warning':
-				$sIcon = 'exclamation-triangle';
+				$sIcon = 'fas fa-exclamation-triangle';
 				break;
 			case 'scoop':
-				$sIcon = 'bullhorn';
+				$sIcon = 'fas fa-bullhorn';
 				break;
 			case 'tip':
-				$sIcon = 'lightbulb';
+				$sIcon = 'fas fa-lightbulb';
 				break;
 			default:
 				$sIcon = '';
@@ -762,9 +762,9 @@
           <!-- yes|no -->
           <rank>1</rank>
           <!-- float -->
-          <height>15</height>
+          <height>12</height>
           <!-- integer , size in em -->
-          <width>12</width>
+          <width>800px</width>
           <!-- integer , must be between 1 and 12 -->
           <title>Portal:Communications</title>
           <!-- string -->

@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  */
 
+use Combodo\iTop\Portal\Brick\CommunicationBrick;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -26,18 +27,43 @@ class CommunicationBrickPortalUIExtension extends AbstractPortalUIExtension
 {
 	const MODULE_CODE = 'itop-communications';
 
+	private string $sModuleVersion;
+	private string $sURLBase;
+
+	public function __construct()
+	{
+		$this->sModuleVersion = utils::GetCompiledModuleVersion(static::MODULE_CODE);
+		$this->sURLBase = utils::GetAbsoluteUrlModulesRoot() . '/' . static::MODULE_CODE . '/';
+	}
+
 	/**
 	 * @inheritdoc
 	 * @throws \Exception
 	 */
 	public function GetCSSFiles(Container $oContainer)
 	{
-		$sModuleVersion = utils::GetCompiledModuleVersion(static::MODULE_CODE);
-		$sURLBase = utils::GetAbsoluteUrlModulesRoot() . '/' . static::MODULE_CODE . '/';
 
-		$aReturn = array(
-			$sURLBase . 'asset/css/communication-brick.css?v=' . $sModuleVersion,
-		);
+		$aReturn = [];
+
+		if(CommunicationBrick::HasLook2025())
+		{
+			$aReturn[] = $this->sURLBase.'asset/css/communication-brick-2025.css?v='.$this->sModuleVersion;
+		}
+		else{
+			$aReturn[] = $this->sURLBase.'asset/css/communication-brick.css?v='.$this->sModuleVersion;
+		};
+
+		return $aReturn;
+	}
+
+	public function GetJSFiles(Container $oContainer)
+	{
+		$aReturn = [];
+
+		if(CommunicationBrick::HasLook2025())
+		{
+			$aReturn[] = $this->sURLBase.'asset/js/component/carousel.js?v='.$this->sModuleVersion;
+		}
 
 		return $aReturn;
 	}
