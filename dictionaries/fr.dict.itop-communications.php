@@ -33,7 +33,7 @@ Dict::Add('FR FR', 'French', 'Français', [
 	'Class:Communication/Attribute:org_id' => 'Annonceur',
 	'Class:Communication/Attribute:org_id+' => '',
 	'Class:Communication/Attribute:org_match_type' => 'Membres des organisations...',
-	'Class:Communication/Attribute:org_match_type+' => 'Il a 3 façons de définir les organisations cibles de la communication :
+	'Class:Communication/Attribute:org_match_type+' => 'Il y a 3 façons de définir les organisations cibles de la communication :
 - Uniquement les organisations de l\'onglet "Organisations choisies",
 - Les organisations choisies et toutes leurs descendantes,
 - Les organisations définies dynamiquement par l\'OQL',
