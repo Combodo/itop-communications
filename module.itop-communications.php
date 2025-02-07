@@ -24,7 +24,7 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'itop-communications/1.3.4',
+	'itop-communications/1.3.5',
 	array(
 		// Identification
 		//
@@ -34,8 +34,8 @@ SetupWebPage::AddModule(
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-portal-base/1.0.1',
-			'itop-service-mgmt/2.4.0||itop-service-mgmt-provider/2.4.0', // because of the menu
+			'itop-portal-base/3.0.0',
+			'itop-service-mgmt/3.0.0||itop-service-mgmt-provider/3.0.0', // because of the menu
 		),
 		'mandatory' => false,
 		'visible' => true,
