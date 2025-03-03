@@ -16,6 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  */
 
+.ipb-tile--communication .ipb-tile--extra-content {
+    display: flex;
+    flex-direction: column;
+}
+
 
 /* TILE DECORATION */
 
@@ -62,12 +67,10 @@
 /* CAROUSEL INDICATORS */
 
 .ipb-tile--communication .carousel-indicators {
-    top: -20px;
-    left: 55px;
-    margin-inline-start: 0;
+    position: static;
     text-align: left;
-    bottom: unset;
     z-index: 0;
+    margin: 0;
 }
 
 .ipb-tile--communication .carousel-indicators li {
@@ -117,16 +120,6 @@
     cursor: pointer;
 }
 
-.ipb-tile--communication .carousel-inner:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 40px;
-    bottom: 0px;
-    left: 0px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 255) 100%);
-    pointer-events: none;
-}
 
 /* CAROUSEL CONTROL */
 
@@ -148,5 +141,35 @@
 }
 
 
+/* MODAL */
+
+.ipb-modal--communication .modal-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ipb-modal--communication .modal-footer-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ipb-modal--communication .modal-actions{
+    white-space: nowrap;
+}
+
+/* READ MORE */
+
+.status-bar {
+    padding-top: 10px;
+    border-top: 1px solid buttonface;
+    background-color: white;
+
+    display: flex;
+    justify-content: space-between;
+}
 
 
+.read-more{
+    white-space: nowrap;
+}

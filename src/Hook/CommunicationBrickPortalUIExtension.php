@@ -62,7 +62,7 @@ class CommunicationBrickPortalUIExtension extends AbstractPortalUIExtension
 
 		if(CommunicationBrick::HasLook2025())
 		{
-			$aReturn[] = $this->sURLBase.'asset/js/component/carousel.js?v='.$this->sModuleVersion;
+			$aReturn[] = $this->sURLBase.'asset/js/custom_elements/carousel_tile_element.js?v='.$this->sModuleVersion;
 		}
 
 		return $aReturn;

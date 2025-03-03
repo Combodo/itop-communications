@@ -17,38 +17,33 @@
  */
 
 /**
- * Component to manipulate a carousel tile.
+ * Carousel tile element.
  *
  * note: depends on JQuery due to boostrap carousel.
  */
-class IpbTileCarousel extends IpbTile {
+class IpbCarouselTileElement extends IpbTileElement {
 
-    /**
-     * Constructor.
-     *
-     * @param sId HTMLElement id
-     * @param sName tile name
-     * @param sModalId modal id
-     */
-    constructor(sId, sName, sModalId) {
-        super(sId, sName);
-        this.sModalId = sModalId;
-
-        // needs jquery, so wait for the page to be ready
-        Component.PageReady(() => this.#Init());
+    static {
+        BaseElement.PageReady(() => {
+            customElements.define("ipb-carousel-tile", IpbCarouselTileElement);
+        });
     }
 
-    /**
-     * Initialize the carousel.
-     */
-    #Init() {
+    $Carousel = null;
+    $Modal = null;
+    iModalCurrentMessage = 1;
+    iMessagesCount = 0;
+
+    connectedCallback() {
 
         // store the jquery elements
-        this.$Carousel = $(`#${this.sId}`);
-        this.$Modal = $(`#${this.sModalId}`);
+        this.$Carousel = $(`#${this.id}`);
+        this.$Modal = $(`#${this.getAttribute('data-modal-id')}`);
+
+        // observe the carousel inner element to update the read more button
+        new ResizeObserver(() => this.UpdateCarouselReadMore()).observe(this.querySelector('.carousel-inner'));
 
         // store the number of items
-        this.iModalCurrentMessage = 1;
         this.iMessagesCount = this.$Carousel.data('items-count');
 
         // open the item content in modal
@@ -69,6 +64,7 @@ class IpbTileCarousel extends IpbTile {
             this.SetTitle(itemElement.data('item-title'));
             this.SetDecorationClass(itemElement.data('item-icon'));
             this.SetIconClass(itemElement.data('item-icon-class'));
+            this.UpdateCarouselReadMore();
         });
 
         // carousel prev button
@@ -79,6 +75,11 @@ class IpbTileCarousel extends IpbTile {
         // carousel next button
         $('.ipb-button--next', this.$Carousel).on('click', () => {
             this.Next();
+        });
+
+        // carousel modal open
+        $('.ipb-button--open-modal', this.$Carousel).on('click', () => {
+            this.OpenModal();
         });
 
         // modal prev button
@@ -95,6 +96,8 @@ class IpbTileCarousel extends IpbTile {
 
         // initial modal update
         this.UpdateModal();
+
+        this.UpdateCarouselReadMore();
     }
 
     Pause() {
@@ -115,6 +118,18 @@ class IpbTileCarousel extends IpbTile {
 
     Next() {
         this.$Carousel.carousel('next');
+    }
+
+    UpdateCarouselReadMore() {
+
+        let innerHeight = this.querySelector('.carousel-inner').offsetHeight;
+        let activeHeight = this.querySelector('.item.active').offsetHeight;
+
+        // if (activeHeight > innerHeight) {
+            this.querySelector('.read-more').classList.toggle('ipb-is-hidden', activeHeight < innerHeight);
+        // } else {
+        //     this.querySelector('.read-more').style.display = 'none';
+        // }
     }
 
     OpenModal() {
