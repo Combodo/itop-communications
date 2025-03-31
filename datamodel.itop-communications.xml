@@ -315,7 +315,7 @@
 				$sIcon = 'fas fa-lightbulb';
 				break;
 			default:
-				$sIcon = '';
+				$sIcon = 'fas fa-comment';
 		}
 		return $sIcon;
     }

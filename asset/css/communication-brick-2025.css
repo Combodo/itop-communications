@@ -75,7 +75,7 @@
 
 .ipb-tile--communication .carousel-indicators li {
     width: 10px;
-    height: 4px;
+    height: 6px;
     background-color: #cdcdcd;
     border: none;
     border-radius: 3px;
@@ -86,7 +86,7 @@
 
 .ipb-tile--communication .carousel-indicators .active {
     background-color: #2b6bb0;
-    height: 4px;
+    height: 6px;
     border: none !important;
     transform: scaleX(1.4);
     margin-left: 4px;
@@ -102,7 +102,7 @@
 }
 
 .ipb-tile--communication .carousel-indicators .active.scoop {
-    background-color: #7bb02b;
+    background-color: #ca3232;
 }
 
 .ipb-tile--communication .carousel-indicators .active.tip {
@@ -152,6 +152,11 @@
 .ipb-modal--communication .modal-footer-container {
     display: flex;
     justify-content: space-between;
+}
+
+.ipb-modal--communication .modal-body{
+    display: flow-root;
+    overflow: hidden;
 }
 
 .ipb-modal--communication .modal-actions{
