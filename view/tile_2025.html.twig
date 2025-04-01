@@ -98,3 +98,10 @@
 
 {% endblock %}
 
+{% block pTileLiveScriptHelpers %}
+    // initialize the communication tile color here (because it is not part of brick model)
+    {% if messages|length > 0 %}
+        let tile = document.getElementById('{{ id }}');
+        tile.SetDecorationClass('{{ messages[0].Get('icon') }}');
+    {% endif %}
+{% endblock %}
