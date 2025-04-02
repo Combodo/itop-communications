@@ -127,11 +127,7 @@ class IpbCarouselTileElement extends IpbTileElement {
         let innerHeight = this.querySelector('.carousel-inner').offsetHeight;
         let activeHeight = this.querySelector('.item.active').offsetHeight;
 
-        // if (activeHeight > innerHeight) {
-            this.querySelector('.read-more').classList.toggle('ipb-is-hidden', activeHeight < innerHeight);
-        // } else {
-        //     this.querySelector('.read-more').style.display = 'none';
-        // }
+        this.querySelector('.ipb-read-more').classList.toggle('ipb-is-hidden', activeHeight < innerHeight);
     }
 
     OpenModal() {
@@ -168,7 +164,7 @@ class IpbCarouselTileElement extends IpbTileElement {
         let itemElement = $(`.item[data-item-number="${this.iModalCurrentMessage}"]`, this.$Carousel);
         let sTitleIcon = `<div class="ipb-tile--decoration ${itemElement.data('item-icon')}"><span class="ipb-tile--decoration--icon icon ${itemElement.data('item-icon-class')}"></span></div>`;
         $('.modal-body', this.$Modal).html(itemElement.html());
-        $('.modal-title', this.$Modal).html(sTitleIcon + '&nbsp; ' + itemElement.data('item-title'));
+        $('.modal-title', this.$Modal).html(sTitleIcon + itemElement.data('item-title'));
         $('[data-role="carousel-modal--message-count"]', this.$Modal).html(itemElement.data('item-number') + ' / ' + this.iMessagesCount);
 
         // update navigation buttons

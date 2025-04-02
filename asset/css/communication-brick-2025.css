@@ -162,6 +162,9 @@
 .ipb-modal--communication .modal-actions{
     white-space: nowrap;
 }
+.ipb-modal--communication .ipb-tile--decoration {
+	margin-right: 8px;
+}
 
 .ipb-carousel-modal--message-count-wrapper {
 	display: flex;
@@ -184,6 +187,10 @@
 }
 
 
-.read-more{
+.ipb-read-more{
     white-space: nowrap;
+}
+
+.ipb-read-more--icon{
+	margin-left: 4px;
 }
