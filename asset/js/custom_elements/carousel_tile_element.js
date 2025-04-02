@@ -141,8 +141,18 @@ class IpbCarouselTileElement extends IpbTileElement {
         // update modal content
         this.UpdateModal();
 
-        // show modal
-        this.$Modal.modal('show');
+	    // Prepare base options
+	    let oOptions = {
+		    base_modal: {
+			    usage: 'replace',
+			    selector: '#' + this.$Modal.attr('id')
+		    },
+		    size: 'lg',
+		    
+	    };
+
+	    // show modal
+	    CombodoModal.OpenModal(oOptions);
     }
 
     UpdateModalNavigationButtons() {
