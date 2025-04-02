@@ -57,7 +57,9 @@ class IpbCarouselTileElement extends IpbTileElement {
             // open the modal
             this.OpenModal();
         });
-
+	    let itemCurrentElement = $('.item.active', this.$Carousel);
+	    this.SetDecorationClass(itemCurrentElement.data('item-icon'));
+	
         // change tile title and decoration on slide events
         this.$Carousel.on('slid.bs.carousel', () => {
             let itemElement = $('.item.active', this.$Carousel);
