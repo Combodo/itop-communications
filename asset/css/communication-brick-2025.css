@@ -163,6 +163,15 @@
     white-space: nowrap;
 }
 
+.ipb-carousel-modal--message-count-wrapper {
+	display: flex;
+	align-items: center;
+}
+.ipb-carousel-modal--message-count {
+	margin-left: 8px;
+	font-weight: 600;
+}
+
 /* READ MORE */
 
 .status-bar {
