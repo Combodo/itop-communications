@@ -47,16 +47,16 @@ class CommunicationBrick extends PortalBrick
 		parent::RegisterTemplates($oTemplatesRegister);
 		$oTemplatesRegister->RegisterTemplates(self::class,
 			TemplateDefinitionDto::Create('tile',
-				$oTemplatesRegister->GetUIVersion() === '2025' ?
-					'itop-communications/view/tile_2025.html.twig' : 'itop-communications/view/tile.html.twig')
+				$oTemplatesRegister->GetUIVersion() === 'v3' ?
+					'itop-communications/view/tile_v3.html.twig' : 'itop-communications/view/tile.html.twig')
 		);
 	}
 
-	public static function HasLook2025(): bool
+	public static function HasV3Look(): bool
 	{
 		if (class_exists('Combodo\iTop\Portal\Service\TemplatesProvider\TemplatesProviderService'))
 		{
-			return self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === '2025';
+			return self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === 'v3';
 		}
 
 		return false;
