@@ -44,10 +44,16 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
-			// Explicitly load classes from DM
-			'model.itop-communications.php',
-			// Compatibility layer
-			'compatibilitybridge.php',
+			// Explicitly load classes for APIs
+			'/src/BackgroundProcess/AutoCloseCommunication.php',
+			'/src/Hook/CommunicationBrickPortalUIExtension.php',
+			'/src/Hook/CommunicationPageUIBlockExtension.php',
+			'/src/Hook/CommunicationLoginUIExtension.php',
+			'/src/Controller/CommunicationCollapsibleSection.php',
+			// Autoloader for module classes
+			'/vendor/autoload.php',
+			// Must be explicitly loaded to register its routes
+			'/src/Router/CommunicationBrickRouter.php',
 		),
 		'webservice' => array(
 			

@@ -25,6 +25,7 @@ use Combodo\iTop\Portal\Brick\BrickCollection;
 use DBObjectSearch;
 use DBObjectSet;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use UserRights;
 
@@ -82,7 +83,14 @@ class CommunicationBrickController extends BrickController
 		}
 		$aData['message_count'] = $iCount;
 
-		return $this->render($oBrick->GetTileTemplatePath(), $aData);
+		// set title and icon for the tile with the first message
+		if ($iCount > 0)
+		{
+			$oBrick->SetTitleHome($aData['messages'][0]->GetAsHTML('title'));
+			$oBrick->SetDecorationClassHome($aData['messages'][0]->GetFontAwesomeIcon());
+		}
+
+		return $iCount > 0 ? $this->render($oBrick->GetTemplatePath('tile'), $aData) : new Response();
 	}
 
 }

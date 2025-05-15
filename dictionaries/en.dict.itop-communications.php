@@ -122,4 +122,5 @@ Dict::Add('EN US', 'English', 'English', array(
     'Communication:when' => 'When',
     'Communication:to_whom' => 'To whom and where',
     'Communication:what' => 'What',
+	'Communication:read_more' => 'Click to read more',
 ));

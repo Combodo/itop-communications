@@ -89,6 +89,7 @@ A ne spécifier que si vous mettez "définies par OQL" dans le champ "Membres de
 	'Communication:to_whom' => 'Pour qui et où',
 	'Communication:what' => 'Quel message',
 	'Communication:when' => 'Quand',
+	'Communication:read_more' => 'Cliquez pour lire la suite',
 	'Menu:Communication' => 'Communications',
 	'Menu:Communication+' => 'Communications en cours',
 	'Portal:Communication:Next' => 'Suivant',

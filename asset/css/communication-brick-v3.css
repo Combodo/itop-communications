@@ -1,0 +1,196 @@
+/*
+ * Copyright (C) 2013-2024 Combodo SAS
+ *
+ * This file is part of iTop.
+ *
+ * iTop is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * iTop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ */
+
+.ipb-tile--communication .ipb-tile--extra-content {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* TILE DECORATION */
+
+.ipb-tile--communication .ipb-tile--decoration.information,
+.ipb-modal--communication .ipb-tile--decoration.information{
+    background-color: #265f9c1a;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.warning,
+.ipb-modal--communication .ipb-tile--decoration.warning {
+    background-color: #cd9b231a;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.scoop,
+.ipb-modal--communication .ipb-tile--decoration.scoop {
+    background-color: #ca32321a;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.tip,
+.ipb-modal--communication .ipb-tile--decoration.tip {
+    background-color: #a72bb01a;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.information .icon,
+.ipb-modal--communication .ipb-tile--decoration.information .icon {
+    color: #2b6bb0;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.warning .icon,
+.ipb-modal--communication .ipb-tile--decoration.warning .icon {
+    color: #cd9b23;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.scoop .icon,
+.ipb-modal--communication .ipb-tile--decoration.scoop .icon {
+    color: #ca3232;
+}
+
+.ipb-tile--communication .ipb-tile--decoration.tip .icon,
+.ipb-modal--communication .ipb-tile--decoration.tip .icon {
+    color: #a72bb0;
+}
+
+/* CAROUSEL INDICATORS */
+
+.ipb-tile--communication .carousel-indicators {
+    position: static;
+    text-align: left;
+    z-index: 0;
+    margin: 0;
+}
+
+.ipb-tile--communication .carousel-indicators li {
+    width: 10px;
+    height: 6px;
+    background-color: #cdcdcd;
+    border: none;
+    border-radius: 3px;
+    transition: transform 330ms ease-in-out;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.ipb-tile--communication .carousel-indicators .active {
+    background-color: #2b6bb0;
+    height: 6px;
+    border: none !important;
+    transform: scaleX(1.4);
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.ipb-tile--communication .carousel-indicators .active.information {
+    background-color: #2b6bb0;
+}
+
+.ipb-tile--communication .carousel-indicators .active.warning {
+    background-color: #b08a2b;
+}
+
+.ipb-tile--communication .carousel-indicators .active.scoop {
+    background-color: #ca3232;
+}
+
+.ipb-tile--communication .carousel-indicators .active.tip {
+    background-color: #a72bb0;
+}
+
+/* CAROUSEL INNER */
+
+.ipb-tile--communication .carousel-inner {
+    height: 100%;
+    text-align: justify;
+}
+
+.ipb-tile--communication .carousel-inner .item {
+    cursor: pointer;
+}
+
+
+/* CAROUSEL CONTROL */
+
+.ipb-tile--communication .carousel-control {
+    position: relative;
+    width: 50px;
+}
+
+.ipb-tile--communication .carousel-control > span {
+    color: #6E7A8AFF;
+}
+
+.ipb-tile--communication .carousel-control.right {
+    background: transparent;
+}
+
+.ipb-tile--communication .carousel-control.left {
+    background: transparent;
+}
+
+
+/* MODAL */
+
+.ipb-modal--communication .modal-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ipb-modal--communication .modal-footer-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ipb-modal--communication .modal-body{
+    display: flow-root;
+    overflow: hidden;
+}
+
+.ipb-modal--communication .modal-actions{
+    white-space: nowrap;
+}
+.ipb-modal--communication .ipb-tile--decoration {
+	margin-right: 8px;
+}
+
+.ipb-carousel-modal--message-count-wrapper {
+	display: flex;
+	align-items: center;
+}
+.ipb-carousel-modal--message-count {
+	margin-left: 8px;
+	font-weight: 600;
+}
+
+/* READ MORE */
+
+.status-bar {
+    padding-top: 10px;
+    border-top: 1px solid buttonface;
+    background-color: white;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.ipb-read-more{
+    white-space: nowrap;
+}
+
+.ipb-read-more--icon{
+	margin-left: 4px;
+}

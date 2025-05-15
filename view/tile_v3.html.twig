@@ -1,0 +1,99 @@
+{% extends template('tile', 'Combodo\\iTop\\Portal\\Brick\\PortalBrick') %}
+
+{% set name = 'communication' %}
+{% set hasInlineTitle = true %}
+{% set classes = 'carousel' %}
+{% set sModalId = 'communication-modal-' ~ brick.GetId %}
+{% set attr = 'data-ride="carousel" data-modal-id="' ~ sModalId ~ '" data-role="navigation-trigger" tabindex="0" data-items-count="' ~ message_count ~ '"' %}
+{% set html_element = 'ipb-carousel-tile' %}
+
+{% block pTileActions %}
+    {#    <button class="btn btn-secondary ipb-button--open-modal"> #}
+    {#        <span class="far fa-window-restore"></span> #}
+    {#    </button> #}
+    <button class="btn btn-default alternative ipb-button--prev">
+        <span class="fas fa-chevron-left"></span>
+    </button>
+    <button class="btn btn-default alternative ipb-button--next">
+        <span class="fas fa-chevron-right"></span>
+    </button>
+{% endblock %}
+
+{% block pTileExtraContent %}
+
+    <div class="ipb-tile--extra-content" {% if oBrick.GetHeight %}style="height:{{ oBrick.GetHeight }}em;"{% endif %}>
+
+
+        {# carousel inner #}
+    <div class="carousel-inner" role="listbox">
+        {% for message in messages %}
+            <div class="ipb-tile-communication--item item{% if loop.index0 == 0 %} active{% endif %}"
+                 data-item-title="{{ message.Get('title') }}"
+                 data-item-icon="{{ message.Get('icon') }}"
+                 data-item-icon-class="{{ message.GetFontAwesomeIcon() }}"
+                 data-item-number="{{ loop.index0 + 1 }}"
+            >
+                {{ message.GetAsHTML('message') | raw }}
+            </div>
+        {% endfor %}
+    </div>
+
+        <div class="status-bar">
+
+            {# carousel indicators #}
+            {% if message_count > 1 %}
+                <ol class="carousel-indicators">
+                    {% for message in messages %}
+                        <li data-target="#{{ id }}" data-slide-to="{{ loop.index0 }}"
+                            class="{% if loop.index0 == 0 %}active{% endif %} {{ message.Get('icon') }}"></li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            <span class="ipb-read-more ipb-is-hidden">
+                {{ 'Communication:read_more'|dict_s }}<span class="ipb-read-more--icon fas fa-angle-double-right"></span>
+            </span>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block pTileModal %}
+    <div id="{{ sModalId }}" class="ipb-modal--communication modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-container">
+                        <h4 class="modal-title"></h4>
+                        <div class="modal-actions">
+                            <button class="btn btn-default alternative ipb-button--prev">
+                                <span class="fas fa-chevron-left"></span>
+                            </button>
+                            <button class="btn btn-default alternative ipb-button--next">
+                                <span class="fas fa-chevron-right"></span>
+                            </button>
+                            <button class="btn btn-default alternative ipb-button--close" data-dismiss="modal">
+                                <span class="fas fa-times"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-footer-container">
+                        <div class="ipb-carousel-modal--message-count-wrapper">
+                            <span>{{ 'Class:Communication'|dict_s }}</span>
+                            <span class="ipb-carousel-modal--message-count" data-role="carousel-modal--message-count"></span>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            {{ 'UI:Button:Ok'|dict_s }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

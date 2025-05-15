@@ -20,8 +20,10 @@
 
 namespace Combodo\iTop\Portal\Brick;
 
-use \Combodo\iTop\Portal\Brick\PortalBrick;
 use Combodo\iTop\DesignElement;
+use Combodo\iTop\Portal\Service\TemplatesProvider\TemplateDefinitionDto;
+use Combodo\iTop\Portal\Service\TemplatesProvider\TemplatesRegister;
+use Combodo\iTop\Portal\Service\TemplatesProvider\TemplatesService;
 
 /**
  * Description of CommunicationBrick
@@ -32,13 +34,33 @@ class CommunicationBrick extends PortalBrick
 {
 	const DEFAULT_SCOPE = "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
 
-	const DEFAULT_HEIGHT = "15";
+	const DEFAULT_HEIGHT = "12";
 	const DEFAULT_VISIBLE_NAVIGATION_MENU = false;
 	const DEFAULT_TILE_TEMPLATE_PATH = 'itop-communications/view/tile.html.twig';
 	const DEFAULT_TILE_CONTROLLER_ACTION = 'Combodo\\iTop\\Portal\\Controller\\CommunicationBrickController::RenderTileAction';
 
 	protected $sOql;
 	protected $iHeightEm;
+
+	public static function RegisterTemplates(TemplatesRegister $oTemplatesRegister): void
+	{
+		parent::RegisterTemplates($oTemplatesRegister);
+		$oTemplatesRegister->RegisterTemplates(self::class,
+			TemplateDefinitionDto::Create('tile',
+				$oTemplatesRegister->GetUIVersion() === 'v3' ?
+					'itop-communications/view/tile_v3.html.twig' : 'itop-communications/view/tile.html.twig')
+		);
+	}
+
+	public static function HasV3Look(): bool
+	{
+		if (class_exists('Combodo\iTop\Portal\Service\TemplatesProvider\TemplatesProviderService'))
+		{
+			return self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === 'v3';
+		}
+
+		return false;
+	}
 
 	/**
 	 * @inheritDoc
