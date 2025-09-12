@@ -84,7 +84,6 @@ class CommunicationBrickController extends BrickController
 		}
 		$aData['message_count'] = $iCount;
 
-		$aContext = MetaModel::AddMagicPlaceholders([]);
 		// set title and icon for the tile with the first message
 		if ($iCount > 0)
 		{
