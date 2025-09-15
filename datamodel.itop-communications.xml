@@ -825,4 +825,14 @@ abstract class _Communication extends cmdbAbstractObject
       </content>
     </snippet>
   </snippets>
+  <meta>
+    <classes>
+      <class id="_Communication" _delta="define">
+        <parent>cmdbAbstractObject</parent>
+        <fields>
+          <field id="allowed_portals" xsi:type="AttributeEnumSet"/>
+        </fields>
+      </class>
+    </classes>
+  </meta>
 </itop_design>
