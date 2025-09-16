@@ -827,8 +827,11 @@ abstract class _Communication extends cmdbAbstractObject
   </snippets>
   <meta>
     <classes>
-      <class id="_Communication" _delta="define">
+      <class id="Communication" _delta="define">
         <parent>cmdbAbstractObject</parent>
+        <properties>
+          <category>bizmodel,searchable</category>
+        </properties>
         <fields>
           <field id="allowed_portals" xsi:type="AttributeEnumSet"/>
         </fields>
