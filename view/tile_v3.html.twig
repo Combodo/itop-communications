@@ -28,12 +28,12 @@
     <div class="carousel-inner" role="listbox">
         {% for message in messages %}
             <div class="ipb-tile-communication--item item{% if loop.index0 == 0 %} active{% endif %}"
-                 data-item-title="{{ message.Get('title') }}"
+                 data-item-title="{{ message.GetWithContext('title') }}"
                  data-item-icon="{{ message.Get('icon') }}"
                  data-item-icon-class="{{ message.GetFontAwesomeIcon() }}"
                  data-item-number="{{ loop.index0 + 1 }}"
             >
-                {{ message.GetAsHTML('message') | raw }}
+                {{ message.GetAsHtmlWithContext('message') | raw }}
             </div>
         {% endfor %}
     </div>
