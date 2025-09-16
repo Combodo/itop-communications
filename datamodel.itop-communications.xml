@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.2">
+<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.3">
   <classes>
     <class id="Communication" _delta="define">
       <properties>
@@ -26,9 +26,6 @@
             <attribute id="ref"/>
           </attributes>
         </naming>
-        <fields_semantic>
-          <state_attribute>status</state_attribute>
-        </fields_semantic>
       </properties>
       <fields>
         <field id="ref" xsi:type="AttributeString">
@@ -50,12 +47,8 @@
         <field id="status" xsi:type="AttributeEnum">
           <sql>status</sql>
           <values>
-            <value id="ongoing">
-              <code>ongoing</code>
-            </value>
-            <value id="closed">
-            <code>closed</code>
-            </value>
+            <value id="ongoing">ongoing</value>
+            <value id="closed">closed</value>
           </values>
           <default_value>ongoing</default_value>
           <is_null_allowed>false</is_null_allowed>
@@ -76,31 +69,15 @@
         <field id="icon" xsi:type="AttributeEnum">
           <sql>icon</sql>
           <values>
-            <value id="none">
-              <code>none</code>
-              <rank>1</rank>
-            </value>
-            <value id="information">
-              <code>information</code>
-              <rank>2</rank>
-            </value>
-            <value id="tip">
-              <code>tip</code>
-              <rank>3</rank>
-            </value>
-            <value id="warning">
-              <code>warning</code>
-              <rank>4</rank>
-            </value>
-            <value id="scoop">
-              <code>scoop</code>
-              <rank>5</rank>
-            </value>
+            <value id="none">none</value>
+            <value id="information">information</value>
+            <value id="warning">warning</value>
+            <value id="tip">tip</value>
+            <value id="scoop">scoop</value>
           </values>
           <default_value>none</default_value>
           <is_null_allowed>false</is_null_allowed>
           <display_style>list</display_style>
-          <sort_type>rank</sort_type>
         </field>
         <field id="title" xsi:type="AttributeString">
           <sql>title</sql>
@@ -127,15 +104,9 @@
         <field id="org_match_type" xsi:type="AttributeEnum">
           <sql>org_match_type</sql>
           <values>
-            <value id="direct">
-              <code>direct</code>
-            </value>
-            <value id="cascade">
-              <code>cascade</code>
-            </value>
-            <value id="oql">
-              <code>oql</code>
-            </value>
+            <value id="direct">direct</value>
+            <value id="cascade">cascade</value>
+            <value id="oql">oql</value>
           </values>
           <default_value>cascade</default_value>
           <is_null_allowed>false</is_null_allowed>
@@ -505,6 +476,26 @@
       $this->Set('allowed_portals', ContextTag::TAG_PORTAL);
   
       parent::PrefillCreationForm($aContextParam);
+    }
+            ]]></code>
+        </method>
+        <method id="GetCommunicationOqlForConsole">
+          <static>true</static>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+    public static function GetCommunicationOqlForConsole()
+    {
+      return "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
+    }
+            ]]></code>
+        </method>
+        <method id="GetCommunicationOqlForLogin">
+          <static>true</static>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+    public static function GetCommunicationOqlForLogin()
+    {
+      return "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
     }
             ]]></code>
         </method>
