@@ -37,7 +37,7 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 			{
 				$aComm = [];
 				$aComm['id'] = $oComm->GetKey();
-				$aComm['title'] = $oComm->GetAsHTML('title');
+				$aComm['title'] = $oComm->Get('title');
 				$aComm['message'] = $oComm->GetAsHTML('message');
 				$aComm['severity'] = $oComm->Get('icon');
 				$aData[] = $aComm;
