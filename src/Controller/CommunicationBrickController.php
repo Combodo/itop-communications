@@ -86,7 +86,7 @@ class CommunicationBrickController extends BrickController
 		// set title and icon for the tile with the first message
 		if ($iCount > 0)
 		{
-			$oBrick->SetTitleHome($aData['messages'][0]->GetAsHTML('title'));
+			$oBrick->SetTitleHome($aData['messages'][0]->Get('title'));
 			$oBrick->SetDecorationClassHome($aData['messages'][0]->GetFontAwesomeIcon());
 		}
 

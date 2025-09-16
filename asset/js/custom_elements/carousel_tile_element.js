@@ -162,9 +162,10 @@ class IpbCarouselTileElement extends IpbTileElement {
 
         // update modal content
         let itemElement = $(`.item[data-item-number="${this.iModalCurrentMessage}"]`, this.$Carousel);
-        let sTitleIcon = `<div class="ipb-tile--decoration ${itemElement.data('item-icon')}"><span class="ipb-tile--decoration--icon icon ${itemElement.data('item-icon-class')}"></span></div>`;
         $('.modal-body', this.$Modal).html(itemElement.html());
-        $('.modal-title', this.$Modal).html(sTitleIcon + itemElement.data('item-title'));
+        $('.modal-title-decoration', this.$Modal)[0].className = `modal-title-decoration ipb-tile--decoration ${itemElement.data('item-icon')}`;
+        $('.modal-title-decoration-icon', this.$Modal)[0].className = `modal-title-decoration-icon ipb-tile--decoration--icon icon ${itemElement.data('item-icon-class')}`;
+        $('.modal-title-text', this.$Modal).text(itemElement.data('item-title'));
         $('[data-role="carousel-modal--message-count"]', this.$Modal).html(itemElement.data('item-number') + ' / ' + this.iMessagesCount);
 
         // update navigation buttons
