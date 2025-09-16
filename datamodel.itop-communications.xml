@@ -508,6 +508,18 @@
     }
             ]]></code>
         </method>
+        <method id="GetAsHtmlWithContext">
+          <static>false</static>
+          <type>Overload-DBObject</type>
+          <code><![CDATA[
+    public function GetAsHtmlWithContext($sAttrCode)
+    {
+      $aContext = \MetaModel::AddMagicPlaceholders([]);
+
+     return \MetaModel::ApplyParams($this->GetAsHTML($sAttrCode), $aContext);
+    }
+            ]]></code>
+        </method>
       </methods>
       <presentation>
         <list>
