@@ -31,7 +31,7 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 
 		$oMainBlock = new CommunicationCollapsibleSection(Dict::S('itop-communications:Communications:Section:Title'),[] ,  'com-wrapper-communications');
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
-		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
+		$oSearch = DBObjectSearch::FromOQL(Communication::GetCommunicationOqlForConsole());
 		$oSearch->AllowAllData();
 		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);
 		$iCount = 0;
