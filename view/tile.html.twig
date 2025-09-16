@@ -36,7 +36,7 @@
 							{% endif %}
 							<div class="message-content tile_body">
 								{% if message.Get('title')  != '' %}
-									<div class="message-title tile_title">{{ message.GetWithContext('title') | raw }}</div>
+									<div class="message-title tile_title">{{ message.GetAsHtmlWithContext('title') | raw }}</div>
 								{% endif %}
 								<div class="message-body tile_description">{{ message.GetAsHtmlWithContext('message') | raw }}</div>
 							</div>
