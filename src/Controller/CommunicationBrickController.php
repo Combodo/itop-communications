@@ -63,14 +63,14 @@ class CommunicationBrickController extends BrickController
 		/** @var \Combodo\iTop\Portal\Brick\CommunicationBrick $oBrick */
 		$oBrick = $oBrickCollection->GetBrickById($sBrickId);
 
-		$aData = array(
+		$aData = [
 			'brick' => $oBrick,
-		);
+		];
 
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
 		$oSearch = DBObjectSearch::FromOQL($oBrick->GetOql());
 		$oSearch->AllowAllData();
-		$oSet = new DBObjectSet($oSearch, array('start_date' => true), array('now' => $sNowSQL));
+		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);
 		$iCount = 0;
 		while ($oComm = $oSet->Fetch())
 		{

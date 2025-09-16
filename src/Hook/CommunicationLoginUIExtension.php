@@ -28,7 +28,7 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
 		$oSearch->AllowAllData();
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
-		$oSet = new DBObjectSet($oSearch, array('start_date' => true), array('now' => $sNowSQL));
+		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);
 		$aData = array();
 		while ($oComm = $oSet->Fetch())
 		{

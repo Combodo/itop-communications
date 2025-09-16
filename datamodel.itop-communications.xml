@@ -9,6 +9,11 @@
         <icon>
           <fileref ref="communication_90109793268989a4709622ad7341c32d"/>
         </icon>
+        <order>
+          <columns>
+            <column id="start_date" ascending="true"/>
+          </columns>
+        </order>
         <reconciliation>
           <attributes>
             <attribute id="org_id"/>

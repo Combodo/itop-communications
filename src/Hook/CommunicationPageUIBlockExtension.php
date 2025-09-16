@@ -33,7 +33,7 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
 		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
 		$oSearch->AllowAllData();
-		$oSet = new DBObjectSet($oSearch, array('start_date' => true), array('now' => $sNowSQL));
+		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);
 		$iCount = 0;
 		$bOpenedByDefault = false;
 		while ($oComm = $oSet->Fetch())
