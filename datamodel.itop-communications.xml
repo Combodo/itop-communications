@@ -514,9 +514,7 @@
           <code><![CDATA[
     public function GetAsHtmlWithContext($sAttrCode)
     {
-      $aContext = \MetaModel::AddMagicPlaceholders([]);
-
-     return \MetaModel::ApplyParams($this->GetAsHTML($sAttrCode), $aContext);
+      return \MetaModel::ApplyParams($this->GetAsHTML($sAttrCode), []);
     }
             ]]></code>
         </method>
