@@ -25,7 +25,8 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 	public function GetTwigContext()
 	{
 		$oLoginContext = new LoginTwigContext();
-		$oSearch = DBObjectSearch::FromOQL(Communication::GetCommunicationOqlForLogin());
+		$sOQLCommunicationOnLogin = MetaModel::GetModuleSetting('itop-communications', 'communications_display_on_login', 'SELECT Communication WHERE status != \'closed\' AND start_date <= :now');
+		$oSearch = DBObjectSearch::FromOQL($sOQLCommunicationOnLogin);
 		$oSearch->AllowAllData();
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
 		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);

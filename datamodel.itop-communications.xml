@@ -508,26 +508,6 @@
     }
             ]]></code>
         </method>
-        <method id="GetCommunicationOqlForConsole">
-          <static>true</static>
-          <type>Overload-DBObject</type>
-          <code><![CDATA[
-    public static function GetCommunicationOqlForConsole()
-    {
-      return "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
-    }
-            ]]></code>
-        </method>
-        <method id="GetCommunicationOqlForLogin">
-          <static>true</static>
-          <type>Overload-DBObject</type>
-          <code><![CDATA[
-    public static function GetCommunicationOqlForLogin()
-    {
-      return "SELECT Communication WHERE status != 'closed' AND start_date <= :now";
-    }
-            ]]></code>
-        </method>
       </methods>
       <presentation>
         <list>
