@@ -24,6 +24,7 @@ use AttributeDateTime;
 use Combodo\iTop\Portal\Brick\BrickCollection;
 use DBObjectSearch;
 use DBObjectSet;
+use MetaModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -83,10 +84,11 @@ class CommunicationBrickController extends BrickController
 		}
 		$aData['message_count'] = $iCount;
 
+		$aContext = MetaModel::AddMagicPlaceholders([]);
 		// set title and icon for the tile with the first message
 		if ($iCount > 0)
 		{
-			$oBrick->SetTitleHome($aData['messages'][0]->GetAsHTML('title'));
+			$oBrick->SetTitleHome(MetaModel::ApplyParams($aData['messages'][0]->Get('title'), []));
 			$oBrick->SetDecorationClassHome($aData['messages'][0]->GetFontAwesomeIcon());
 		}
 
