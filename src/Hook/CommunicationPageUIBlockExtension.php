@@ -31,7 +31,13 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 
 		$oMainBlock = new CommunicationCollapsibleSection(Dict::S('itop-communications:Communications:Section:Title'),[] ,  'com-wrapper-communications');
 		$sNowSQL = date((string)AttributeDateTime::GetSQLFormat());
-		$oSearch = DBObjectSearch::FromOQL("SELECT Communication WHERE status != 'closed' AND start_date <= :now");
+		$sOQLCommunicationOnConsole ='SELECT Communication WHERE status != \'closed\' AND start_date <= :now';
+		// Override the default OQL with the one defined in the module settings
+		$aDisplayFilters = MetaModel::GetModuleSetting('itop-communications', 'display_filter', []);
+		if (array_key_exists('backoffice', $aDisplayFilters) && $aDisplayFilters['backoffice'] != '') {
+			$sOQLCommunicationOnConsole = $aDisplayFilters['backoffice'];
+		}
+		$oSearch = DBObjectSearch::FromOQL($sOQLCommunicationOnConsole);
 		$oSearch->AllowAllData();
 		$oSet = new DBObjectSet($oSearch, [], ['now' => $sNowSQL]);
 		$iCount = 0;
