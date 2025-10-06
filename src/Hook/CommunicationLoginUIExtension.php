@@ -28,7 +28,7 @@ class CommunicationLoginUiExtension implements iLoginUIExtension
 		$sOQLCommunicationOnLogin ='SELECT Communication WHERE status != \'closed\' AND start_date <= :now';
 		// Override the default OQL with the one defined in the module settings
 		$aDisplayFilters = MetaModel::GetModuleSetting('itop-communications', 'display_filter', []);
-		if (array_key_exists('login', $aDisplayFilters) && $aDisplayFilters['login'] != ''){
+		if (array_key_exists('login', $aDisplayFilters) && $aDisplayFilters['login'] != '') {
 			$sOQLCommunicationOnLogin = $aDisplayFilters['login'];
 		}
 
