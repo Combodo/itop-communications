@@ -19,6 +19,7 @@
             <attribute id="org_id"/>
             <attribute id="org_name"/>
             <attribute id="ref"/>
+            <attribute id="title"/>
           </attributes>
         </reconciliation>
         <naming>
