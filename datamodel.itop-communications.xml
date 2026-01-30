@@ -774,6 +774,21 @@
       </group>
     </groups>
     <profiles>
+      <profile id="117" _delta="if_exists">
+        <groups>
+          <group id="Communication" _delta="define">
+            <actions>
+              <action id="action:write">allow</action>
+              <action id="action:bulk write">allow</action>
+              <action id="action:delete">allow</action>
+              <action id="action:bulk delete">allow</action>
+              <action id="stimulus:ev_close">allow</action>
+              <action id="stimulus:ev_reopen">allow</action>
+              <action id="action:bulk read">allow</action>
+            </actions>
+          </group>
+        </groups>
+      </profile>
       <profile id="107" _delta="define">
         <name>Communication Manager</name>
         <description>Person responsible for managing communications to the customers</description>
