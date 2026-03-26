@@ -8,9 +8,6 @@
 {% set html_element = 'ipb-carousel-tile' %}
 
 {% block pTileActions %}
-    {#    <button class="btn btn-secondary ipb-button--open-modal"> #}
-    {#        <span class="far fa-window-restore"></span> #}
-    {#    </button> #}
     <button class="btn btn-default alternative ipb-button--prev">
         <span class="fas fa-chevron-left"></span>
     </button>
@@ -23,20 +20,19 @@
 
     <div class="ipb-tile--extra-content" {% if oBrick.GetHeight %}style="height:{{ oBrick.GetHeight }}em;"{% endif %}>
 
-
         {# carousel inner #}
-    <div class="carousel-inner" role="listbox">
-        {% for message in messages %}
-            <div class="ipb-tile-communication--item item{% if loop.index0 == 0 %} active{% endif %}"
-                 data-item-title="{{ message.GetAsHtmlWithContext('title')|e('html_attr') }}"
-                 data-item-icon="{{ message.Get('icon')|e('html_attr') }}"
-                 data-item-icon-class="{{ message.GetFontAwesomeIcon()|e('html_attr') }}"
-                 data-item-number="{{ loop.index0 + 1 }}"
-            >
-                {{ message.GetAsHtmlWithContext('message') | raw }}
-            </div>
-        {% endfor %}
-    </div>
+        <div class="carousel-inner" role="listbox">
+            {% for message in messages %}
+                <div class="ipb-tile-communication--item item{% if loop.index0 == 0 %} active{% endif %}"
+                     data-item-title="{{ message.GetWithContext('title')|e('html_attr') }}"
+                     data-item-icon="{{ message.Get('icon')|e('html_attr') }}"
+                     data-item-icon-class="{{ message.GetFontAwesomeIcon()|e('html_attr') }}"
+                     data-item-number="{{ loop.index0 + 1 }}"
+                >
+                    {{ message.GetWithContext('message') | raw }}
+                </div>
+            {% endfor %}
+        </div>
 
         <div class="status-bar">
 
@@ -54,7 +50,6 @@
                 {{ 'Communication:read_more'|dict_s }}<span class="ipb-read-more--icon fas fa-angle-double-right"></span>
             </span>
         </div>
-
 
     </div>
 
