@@ -509,13 +509,13 @@
     }
             ]]></code>
         </method>
-        <method id="GetAsHtmlWithContext">
+        <method id="GetWithContext">
           <static>false</static>
           <type>Overload-DBObject</type>
           <code><![CDATA[
-    public function GetAsHtmlWithContext($sAttrCode)
+    public function GetWithContext($sAttrCode)
     {
-      return \MetaModel::ApplyParams($this->GetAsHTML($sAttrCode), []);
+      return \MetaModel::ApplyParams($this->Get($sAttrCode), []);
     }
             ]]></code>
         </method>
