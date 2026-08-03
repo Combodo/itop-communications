@@ -45,7 +45,7 @@ class CommunicationBrick extends PortalBrick
 	public static function RegisterTemplates(TemplatesRegister $oTemplatesRegister): void
 	{
 		parent::RegisterTemplates($oTemplatesRegister);
-        // 'v3' value is supported as it was commited by mistake in earliers portal new look extension
+		// The 'v3' value is supported because it was committed by mistake in an earlier portal new-look extension.
         $oTemplatesRegister->RegisterTemplates(self::class,
 			TemplateDefinitionDto::Create('tile',
 				$oTemplatesRegister->GetUIVersion() === '2025' ||  $oTemplatesRegister->GetUIVersion() === 'v3' ?
