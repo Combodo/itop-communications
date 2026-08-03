@@ -45,18 +45,20 @@ class CommunicationBrick extends PortalBrick
 	public static function RegisterTemplates(TemplatesRegister $oTemplatesRegister): void
 	{
 		parent::RegisterTemplates($oTemplatesRegister);
-		$oTemplatesRegister->RegisterTemplates(self::class,
+        // 'v3' value is supported as it was commited by mistake in earliers portal new look extension
+        $oTemplatesRegister->RegisterTemplates(self::class,
 			TemplateDefinitionDto::Create('tile',
-				$oTemplatesRegister->GetUIVersion() === 'v3' ?
+				$oTemplatesRegister->GetUIVersion() === '2025' ||  $oTemplatesRegister->GetUIVersion() === 'v3' ?
 					'itop-communications/view/tile_v3.html.twig' : 'itop-communications/view/tile.html.twig')
 		);
 	}
 
-	public static function HasV3Look(): bool
+	public static function HasNewLook(): bool
 	{
 		if (class_exists('Combodo\iTop\Portal\Service\TemplatesProvider\TemplatesProviderService'))
 		{
-			return self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === 'v3';
+            // 'v3' value is supported as it was commited by mistake in earliers portal new look extension
+            return self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === '2025' || self::GetTemplatesProviderService()->GetRegister()->GetUIVersion() === 'v3';
 		}
 
 		return false;

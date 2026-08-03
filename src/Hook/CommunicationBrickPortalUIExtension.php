@@ -45,7 +45,7 @@ class CommunicationBrickPortalUIExtension extends AbstractPortalUIExtension
 
 		$aReturn = [];
 
-		if(CommunicationBrick::HasV3Look())
+		if(CommunicationBrick::HasNewLook())
 		{
 			$aReturn[] = $this->sURLBase.'asset/css/communication-brick-v3.css?v='.$this->sModuleVersion;
 		}
@@ -60,7 +60,7 @@ class CommunicationBrickPortalUIExtension extends AbstractPortalUIExtension
 	{
 		$aReturn = [];
 
-		if(CommunicationBrick::HasV3Look())
+		if(CommunicationBrick::HasNewLook())
 		{
 			$aReturn[] = $this->sURLBase.'asset/js/custom_elements/carousel_tile_element.js?v='.$this->sModuleVersion;
 		}
