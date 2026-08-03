@@ -47,7 +47,7 @@ class CommunicationBrickPortalUIExtension extends AbstractPortalUIExtension
 
 		if(CommunicationBrick::HasNewLook())
 		{
-			$aReturn[] = $this->sURLBase.'asset/css/communication-brick-v3.css?v='.$this->sModuleVersion;
+			$aReturn[] = $this->sURLBase.'asset/css/communication-brick-2025.css?v='.$this->sModuleVersion;
 		}
 		else{
 			$aReturn[] = $this->sURLBase.'asset/css/communication-brick.css?v='.$this->sModuleVersion;

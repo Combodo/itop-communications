@@ -49,7 +49,7 @@ class CommunicationBrick extends PortalBrick
         $oTemplatesRegister->RegisterTemplates(self::class,
 			TemplateDefinitionDto::Create('tile',
 				$oTemplatesRegister->GetUIVersion() === '2025' ||  $oTemplatesRegister->GetUIVersion() === 'v3' ?
-					'itop-communications/view/tile_v3.html.twig' : 'itop-communications/view/tile.html.twig')
+					'itop-communications/view/tile_2025.html.twig' : 'itop-communications/view/tile.html.twig')
 		);
 	}
 
