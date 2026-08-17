@@ -17,7 +17,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', [
 	'Class:Communication/Attribute:end_date' => 'Enddatum',
 	'Class:Communication/Attribute:end_date+' => '',
 	'Class:Communication/Attribute:icon' => 'Icon',
-	'Class:Communication/Attribute:icon+' => '',
+	'Class:Communication/Attribute:icon+' => 'Dieser Typ steuert die Hintergrundfarbe der Meldung in der Konsole und optional das Symbol in den Portalen',
 	'Class:Communication/Attribute:icon/Value:information' => 'Information',
 	'Class:Communication/Attribute:icon/Value:information+' => '',
 	'Class:Communication/Attribute:icon/Value:none' => 'Keines',
@@ -54,7 +54,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', [
 	'Class:Communication/Attribute:start_date' => 'Startdatum',
 	'Class:Communication/Attribute:start_date+' => '',
 	'Class:Communication/Attribute:status' => 'Status',
-	'Class:Communication/Attribute:status+' => '',
+	'Class:Communication/Attribute:status+' => 'Ein Hintergrundprozess schließt die Mitteilung automatisch, sobald das Enddatum erreicht ist.
+Geschieht das nicht, bitten Sie Ihren Systemadministrator zu prüfen, ob cron.php läuft',
 	'Class:Communication/Attribute:status/Value:closed' => 'Geschlossen',
 	'Class:Communication/Attribute:status/Value:closed+' => '',
 	'Class:Communication/Attribute:status/Value:ongoing' => 'Laufend',
@@ -71,7 +72,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', [
 	'Class:Communication/Stimulus:ev_reopen+' => '',
 	'Class:Communication/Tab:Preview' => 'Resultierende Organisationen',
 	'Class:Communication/Tab:Preview+' => 'Die von dieser Mitteilung betroffenen Organisationen',
-	'Class:Communication/Tab:PreviewAll' => 'Alle bestehenden Organisationen',
+	'Class:Communication/Tab:PreviewAll' => 'Alle Organisationen fallen in den Geltungsbereich dieser Mitteilung',
 	'Class:Communication/Warning:NoOrgSoAll' => 'Es wurde keine Organisation ausgewählt, so dass die Mittelung für alle sichtbar ist.',
 	'Class:Communication/Warning:OQLProvidedButUnused' => 'Es wurde eine "OQL-Abfrage" definiert, die jedoch nicht genutzt wird solange für "Ziel-Organisationen..." nicht "Organisation einer OQL" ausgewählt ist.',
 	'Class:lnkCommunicationToOrganization' => 'Verknüpfung Miteilung / Organisation',
@@ -94,4 +95,5 @@ Dict::Add('DE DE', 'German', 'Deutsch', [
 	'Portal:Communication:Previous' => 'Vorherige',
 	'Portal:Communications' => 'Mitteilungen',
 	'itop-communications:Communications:Section:Title' => 'Mitteilungen',
+	'Communication:read_more' => 'Zum Weiterlesen klicken',
 ]);
