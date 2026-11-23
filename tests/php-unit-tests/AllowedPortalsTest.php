@@ -78,4 +78,28 @@ class AllowedPortalsTest extends ItopDataTestCase {
 		$oComm->Set('allowed_portals', $sAllowedPortals);
 		return $oComm;
 	}
+
+	public function testGetWithContextPreservesPlainTextTitle(): void
+	{
+		$oComm = new Communication();
+		$oComm->Set('title', 'Communication <created> & assigned');
+
+		$this->assertSame('Communication <created> & assigned', $oComm->GetWithContext('title'));
+	}
+
+	public function testGetWithContextSanitizesHtmlAfterSubstitution(): void
+	{
+		$oComm = new Communication();
+		$oComm->Set('message', '<p><a href="$APP_URL$">Application</a></p>');
+		$sOriginalUrl = \utils::GetConfig()->Get('app_root_url');
+		\utils::GetConfig()->Set('app_root_url', 'javascript:alert(1)/*https://example.com*/');
+		\utils::GetAbsoluteUrlAppRoot(true);
+
+		try {
+			$this->assertSame('<p><a>Application</a></p>', $oComm->GetWithContext('message'));
+		} finally {
+			\utils::GetConfig()->Set('app_root_url', $sOriginalUrl);
+			\utils::GetAbsoluteUrlAppRoot(true);
+		}
+	}
 }

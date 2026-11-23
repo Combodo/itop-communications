@@ -515,7 +515,16 @@
           <code><![CDATA[
     public function GetWithContext($sAttrCode)
     {
-      return \MetaModel::ApplyParams($this->Get($sAttrCode), []);
+      $sApplySanitizeMode = null;
+      if (defined('MetaModel::APPLY_PARAMS_SANITIZE_HTML')) {
+        $sApplySanitizeMode = $sAttrCode === 'message' ? \MetaModel::APPLY_PARAMS_SANITIZE_HTML : \MetaModel::APPLY_PARAMS_SANITIZE_NONE;
+      }
+      $sContent = \MetaModel::ApplyParams($this->Get($sAttrCode), [], $sApplySanitizeMode);
+      if ($sAttrCode === 'message' && $sApplySanitizeMode === null) {
+        $sContent = \DOMSanitizer::Sanitize($sContent);
+      }
+
+      return $sContent;
     }
             ]]></code>
         </method>

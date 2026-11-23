@@ -48,8 +48,12 @@ class CommunicationPageUIBlockExtension implements iPageUIBlockExtension
 			if ($oComm->IsUserInScope(UserRights::GetUserObject()) && $oComm->IsAllowedPortalsValid())
 			{
 				$iCount++;
-				$sTitle = MetaModel::ApplyParams($oComm->Get('title'), []);
-				$sContent = MetaModel::ApplyParams($oComm->GetAsHTML('message'), []);
+				$sTitle = MetaModel::ApplyParams($oComm->Get('title'), [], defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null);
+				$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_HTML') ? MetaModel::APPLY_PARAMS_SANITIZE_HTML : null;
+				$sContent = MetaModel::ApplyParams($oComm->GetAsHTML('message'), [], $sApplySanitizeMode);
+				if ($sApplySanitizeMode === null) {
+					$sContent = DOMSanitizer::Sanitize($sContent);
+				}
 				$oAlertBlock = AlertUIBlockFactory::MakeForInformation($sTitle, $sContent, 'ibo-communication-'.$oComm->GetKey())
 					->EnableSaveCollapsibleState('ibo-communication-'.$oComm->GetKey())
 					->SetColor($oComm->GetColorFromIcon())
